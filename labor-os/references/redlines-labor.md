@@ -8,7 +8,7 @@
 
 ## 0. 继承(case-os)
 
-> 下列红线**全文继承**自 `~/.claude/skills/case-os/references/redlines.md`,本文件不复制正文,只立链接。case-os 安装后,本节**自动有效**。
+> 下列红线**全文继承**自 case-os 的 `references/redlines.md`,本文件不复制正文,只立链接。case-os 安装后,本节**自动有效**。
 >
 > - 文件禁删禁替换;
 > - 文件夹命名铁律;
@@ -38,7 +38,7 @@
 #### 红线1.1.3 保密隔离
 - 🟥**场景**:立场为裁判者;
 - 🟥**要求**:裁判案件材料与分析**禁止**流入顾问轨知识沉淀与经验卡;
-- 🟥**实现**:laboration-output 仅在 `intermediate/劳动覆盖层/L{1-4}/` 路径内,**不得**写入 `~/.claude/skills/*/knowledge/` 或任何经验库。
+- 🟥**实现**:laboration-output 仅在 `intermediate/劳动覆盖层/L{1-4}/` 路径内,**不得**写入任何 skill 的 `knowledge/` 目录或任何经验库。
 
 ---
 
@@ -161,4 +161,4 @@
 
 ---
 
-*本文件与 `~/.claude/skills/labor-os/SKILL.md` 配套安装后生效;不复制 case-os 原 redlines.md 正文,只以链接引用(详 case-os 与本文件"继承"节)。*
+*本文件与 labor-os 的 `SKILL.md` 配套安装后生效;不复制 case-os 原 redlines.md 正文,只以链接引用(详 case-os 与本文件"继承"节)。*

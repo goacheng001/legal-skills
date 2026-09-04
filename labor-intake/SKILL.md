@@ -14,10 +14,10 @@ description: "劳动法OS-争议轨第一步。劳动争议新案接案审查—
 - 已有 `劳动争议案件事实摘要`(用户提供或劳动OS前置问答生成)。
 
 **独立触发保障**(被直接调用时):
-1. 加载 `~/.claude/skills/labor-os/references/redlines-labor.md`;
+1. 加载 `labor-os/references/redlines-labor.md`;
 2. 尝试读取 `案件目录/_archive/labor-os-state.json`,若存在 → 继承 track/stance 不再问;
 3. 若不存在 → **必须先询问一次立场**;
-4. 加载 `~/.claude/skills/labor-os/references/knowledge/主体资格坑点清单.md`、`举证责任分配表.md`、`仲裁流程时限表.md`、本主题库。
+4. 加载 `labor-os/references/knowledge/主体资格坑点清单.md`、`举证责任分配表.md`、`仲裁流程时限表.md`、本主题库。
 
 **必须确认**:是(立场三选一与时效红线均需用户书面确认)。
 

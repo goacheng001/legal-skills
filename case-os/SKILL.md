@@ -128,7 +128,7 @@ metadata:
 
 | 步骤 | 独立Skill | 职责 | 必须确认 |
 |------|----------|------|----------|
-| A1 | `case-git-init` + `case-core-files` | 案件初始化 | 否 |
+| A1 | `case-git-init` | 案件初始化 | 否 |
 | A2 | `case-ocr` | 材料扫描+OCR转换 | 否 |
 | A3 | `case-archive` | 文件夹自动归档 | 否 |
 | A4 | `case-info-extract` | 案件理解 | **是** |

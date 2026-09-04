@@ -15,6 +15,12 @@ description: "劳动法OS-争议轨第三步。仲裁裁决后的裁审衔接—
 - labor-os-state.json.arbitration.case_no 与裁决结果已记录;
 - 若为终局裁决,需在送达后**15/30日窗口内**操作——本skill首屏输出剩余天数。
 
+**独立触发保障**(被直接调用时):
+1. 加载 `labor-os/references/redlines-labor.md`;
+2. 尝试读取 `案件目录/_archive/labor-os-state.json`,若存在 → 继承 track/stance 不再问;
+3. 若不存在 → **必须先询问一次立场**;
+4. 加载"知识引用"节必读主题库。
+
 **必须确认**:是(任何文书在用户确认前不出)。
 
 **执行后 Hook**:否。

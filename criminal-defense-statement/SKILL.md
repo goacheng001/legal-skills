@@ -532,7 +532,7 @@ A/B 模块化辩护词在原存档基础上增加应变模块文件：
 
 ### A. 出厂闸门(redlines v3.3 引用)
 
-辩护词生成前,必须逐项通过以下硬闸门(详见 references/redlines.md「正式文书出厂闸门」):
+辩护词生成前,必须逐项通过以下硬闸门(详见 ../criminal-case-os/references/redlines.md「正式文书出厂闸门」):
 
 1. 通篇无内部模块标签(【M1】、【A.2】等)、无 emoji、无勾选表格;**通篇无内部术语**——技能/模块名(criminal-*、case-* 等)、MCP、CLAUDE.md、状态头、handoff、任务编号(T1–T5)、内部底稿名(《量刑计算表》等)一律不得出现
 2. 通篇无 Markdown 残留标记(#、*、>、--- 等)
@@ -540,11 +540,11 @@ A/B 模块化辩护词在原存档基础上增加应变模块文件：
 4. 落款日期使用"案内现在时"对应日期;庭审文书取状态头开庭日,未定则留空"____年____月____日",禁止使用系统真实日期
 5. 字体/行距/页边距符合 references/刑事文书格式规范.md
 6. 已生成 Word 版 .docx 并完成 Markdown 残留复核
-7. 已通过 references/de-ai-checklist.md 与 anti-ai-voice/SKILL.md 自检
+7. 已通过 ../criminal-case-os/references/de-ai-checklist.md 与 anti-ai-voice/SKILL.md 自检
 
 ### B. 辩点处置清单核对(防自相矛盾)
 
-辩护词生成前,**必须**读取上游 handoff 交接包中的「辩点处置清单」(详见 references/handoff-protocol.md),逐条核对:
+辩护词生成前,**必须**读取上游 handoff 交接包中的「辩点处置清单」(详见 ../criminal-case-os/references/handoff-protocol.md),逐条核对:
 
 | 辩点 ID | 上游处置 | 辩护词采用 | 是否矛盾 |
 |--------|---------|----------|---------|

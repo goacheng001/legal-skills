@@ -274,8 +274,8 @@ criminal-meeting（会见笔录）────┘            │
 
 执行辩护方案前,按案件 `CLAUDE.md` 状态头加载:
 
-- `罪名类型` → `references/crime-elements/{罪名类型}.md`
-- `涉及专业领域` → `references/cross-disciplinary/{领域}.md`
+- `罪名类型` → `../criminal-case-os/references/crime-elements/{罪名类型}.md`
+- `涉及专业领域` → `../criminal-case-os/references/cross-disciplinary/{领域}.md`
 
 加载清单写入《辩护策略分析与路径选择报告》的「执行前检查」章节。
 
@@ -300,7 +300,7 @@ criminal-meeting（会见笔录）────┘            │
 
 ### C. handoff 必填字段
 
-> 自 v3.3 起,本 skill 发出的 handoff 交接包必须包含「辩点处置清单」(详见 references/handoff-protocol.md)。
+> 自 v3.3 起,本 skill 发出的 handoff 交接包必须包含「辩点处置清单」(详见 ../criminal-case-os/references/handoff-protocol.md)。
 
 每条辩点必填:
 - 辩点 ID(D-01 等)

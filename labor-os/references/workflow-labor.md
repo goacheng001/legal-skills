@@ -159,27 +159,33 @@
 ## 六、安装后冒烟测试命令(建议)
 
 ```bash
-# 1. 检查 skill 安装
-ls -ld ~/.claude/skills/labor-os ~/.claude/skills/labor-intake
+# 0. 自动探测 skill 根(兼容 ~/.claude/skills、~/.agents/skills 与软链)
+SKILL_ROOT="$(ls -d ~/.claude/skills/labor-os ~/.agents/skills/labor-os 2>/dev/null | head -1)"
+[ -z "$SKILL_ROOT" ] && { echo "FAIL: labor-os 未安装"; exit 1; }
+echo "labor-os 根: $SKILL_ROOT(真实路径: $(cd "$SKILL_ROOT" && pwd -P))"
 
-# 2. 软链验证(shared-skills 应自动迁移)
-readlink ~/.claude/skills/labor-os/SKILL.md   # 应指向 shared-skills
+# 1. 总控+8子skill 在位
+for s in labor-os labor-intake labor-arbitration labor-bridge labor-execution \
+         labor-contract-design labor-policy-design labor-exit-plan labor-audit; do
+  ls -ld "$SKILL_ROOT/../$s" >/dev/null || echo "FAIL: $s 缺失"
+done
 
-# 3. 知识库挂载验证
-ls ~/.claude/skills/labor-os/references/knowledge/
+# 2. 知识库挂载(期望13库)
+[ "$(ls "$SKILL_ROOT/references/knowledge/" | wc -l | tr -d ' ')" = "13" ] \
+  && echo "OK: 13库" || echo "FAIL: 库数不符"
 
-# 4. 触发词通读
-grep -A 1 "labor-os" ~/.claude/CLAUDE.md | head -20
+# 3. 红线/工作流/索引三件套非空
+test -s "$SKILL_ROOT/references/redlines-labor.md" \
+  && test -s "$SKILL_ROOT/references/workflow-labor.md" \
+  && grep -q "效力状态" "$SKILL_ROOT/references/knowledge/劳动社保法规索引.md" \
+  && echo "OK: 契约三件套"
 
-# 5. 模拟运行(争议轨)
-# 在 case-os 案件目录输入:
-"继续"     # 走 labor-intake 路径(若有 labor-os-state.json)
-"劳动仲裁" # 走 labor-arbitration
-
-# 6. 模拟运行(顾问轨)
-"劳动合同审查"  # 走 labor-contract-design
-"用工体检"     # 走 labor-audit
+# 4. 模拟运行
+# 争议轨案件目录输入:"继续" → labor-intake;"劳动仲裁" → labor-arbitration
+# 顾问轨输入:"劳动合同审查" → labor-contract-design;"用工体检" → labor-audit
 ```
+
+> 更省事:直接跑固化工具 `bash 劳动OS蒸馏/scripts/smoke-test.sh`(同一逻辑,FAIL 不合入规矩的执行体)。
 
 ---
 

@@ -341,9 +341,9 @@ criminal-case-os/
 
 | 素材 | 来源 | 授权 | 用途 |
 |------|------|------|------|
-| 罪名要件库 5 份 | criminal-defense-workflow v3.1.0 references/crime-elements/ | **private,仅限内部使用** | 阅卷/策略/辩护阶段按罪名类型加载 |
-| 跨专业知识库 3 份 | criminal-defense-workflow v3.1.0 references/cross-disciplinary/ | **private,仅限内部使用** | 仅供审查/质证/发问使用,不替代鉴定 |
-| 量刑辩护方法论 | criminal-defense-workflow v3.1.0 sub-skills/10_量刑辩护专项 | **private,仅限内部使用** | criminal-sentencing-defense 底稿 |
+| 罪名要件库 5 份 | 本库 references/crime-elements/（源自 defense-workflow v3.1.0） | **private,仅限内部使用** | 阅卷/策略/辩护阶段按罪名类型加载 |
+| 跨专业知识库 3 份 | 本库 references/cross-disciplinary/（源自 defense-workflow v3.1.0） | **private,仅限内部使用** | 仅供审查/质证/发问使用,不替代鉴定 |
+| 量刑辩护方法论 | 本库 references/（量刑方法并入 criminal-sentencing-defense） | **private,仅限内部使用** | criminal-sentencing-defense 底稿 |
 | 上诉/申诉方法论 | criminal-defense-workflow v3.1.0 sub-skills/11/12 | **private,仅限内部使用** | criminal-appeal 底稿 |
 | 归档材料清单 | criminal-defense-workflow v3.1.0 sub-skills/13 | **private,仅限内部使用** | references/刑事归档清单.md |
 

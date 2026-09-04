@@ -4,21 +4,6 @@ description: 扫描案件目录的 PDF/图片/音频/视频，批量转 Markdown
 author: Legal Skills Project
 ---
 
-# --- 安全删除约定(替换 rm,移废纸篓可恢复) ---
-# 本机安全规则:禁止 rm 直接删除;删除一律移到废纸篓(osascript),可恢复。
-# 兼容 ~/、/绝对路径、相对路径;软链断链对象也可处理。
-safe_remove() { for p in "$@"; do
-  [ -e "$p" ] || [ -L "$p" ] || continue
-  local a; a="${p/#~/$HOME}"
-  case "$a" in /*) ;; *) a="$PWD/$a" ;; esac
-  osascript -e 'tell app "Finder" to delete POSIX file "'"'"$a"'"'"' >/dev/null 2>&1 || true
-done; }
-# 批量删除(目录树):把 find 出的路径逐项移废纸篓,可恢复
-safe_remove_tree() { while IFS= read -r p; do
-  [ -e "$p" ] || [ -L "$p" ] || continue
-  osascript -e 'tell app "Finder" to delete POSIX file "'"'"$p"'"'"' >/dev/null 2>&1 || true
-done; }
-
 扫描案件目录中的所有材料文件，批量转换为Markdown格式，供后续分析使用。
 
 **前置条件**：A1（Git初始化）完成
@@ -257,6 +242,12 @@ mv ~/Desktop/录屏取证输出/*.pdf "[案件根目录]/截图证据/"
 ### 第九步：清理残留文件
 
 ```bash
+safe_remove() { for p in "$@"; do
+  [ -e "$p" ] || [ -L "$p" ] || continue
+  local a; a="${p/#~/$HOME}"
+  case "$a" in /*) ;; *) a="$PWD/$a" ;; esac
+  osascript -e 'tell app "Finder" to delete POSIX file "'"'"$a"'"'"' >/dev/null 2>&1 || true
+done; }
 safe_remove "$OCR_TMP_DIR"
 safe_remove ~/Desktop/录屏取证输出
 

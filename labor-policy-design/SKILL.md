@@ -11,6 +11,11 @@ description: "劳动法OS-顾问轨。规章制度(考勤/休假/奖惩/纪律)�
 
 **轨道**:顾问轨(轻状态:项目目录 `CLAUDE.md`+`LOG.md`+`client.md`+`deliverables/`)。
 
+**独立触发保障**(被直接调用时):
+1. 加载 `labor-os/references/redlines-labor.md`;
+2. 加载"知识引用"节必读主题库;
+3. 顾问轨无立场锁定,直接进入本职流程。
+
 **必须确认**:是(出件前一次)。
 
 **执行后 Hook**:否。
