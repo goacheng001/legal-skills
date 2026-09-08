@@ -1,0 +1,52 @@
+{
+  "skill": "telecom-fraud-review",
+  "version": "0.1.0",
+  "source_book": "刑事审判实务（下册） — 最高人民法院组织编写",
+  "darwin_compatible": true,
+  "test_cases": [
+    {
+      "id": "should-trigger-01",
+      "type": "should_trigger",
+      "prompt": "缅甸回来的人说在园区里是被逼着打电话骗人的，他自己也骗了二十多万，胁从犯怎么认定？",
+      "expected_behavior": "激活本 skill，适用胁从犯两反向规则（能与外界自由联络、被胁迫后又积极主动实施的一般不认定）+调查核实义务，并结合罪责阶梯处理数额。",
+      "notes": "跨境从宽情节是核心模块"
+    },
+    {
+      "id": "should-trigger-02",
+      "type": "should_trigger",
+      "prompt": "诈骗集团骗了三千多万，但底下的小弟每个人具体骗了多少查不清，怎么定他的数额？",
+      "expected_behavior": "激活本 skill，适用三层罪责阶梯：集团数额已查证→按地位作用、参与时间（宜满30日）、关联度综合认定，从犯可考虑在数额巨大档量刑。",
+      "notes": "三层阶梯是本 skill 的骨架"
+    },
+    {
+      "id": "should-trigger-03",
+      "type": "should_trigger",
+      "prompt": "群发了六万条诈骗短信一条都没骗成，构成犯罪吗？",
+      "expected_behavior": "激活本 skill，适用未遂数量标准：发送诈骗信息5000条以上属'其他严重情节'，以诈骗罪（未遂）定罪；6万条达10倍以上属'其他特别严重情节'。",
+      "notes": "未遂数量折算是特色规则"
+    },
+    {
+      "id": "should-not-trigger-01",
+      "type": "should_not_trigger",
+      "prompt": "把自己的银行卡卖给诈骗团伙取现，定帮信罪还是掩隐罪？",
+      "expected_behavior": "不应激活本 skill，应激活 two-cards-crime-line-drawing（两卡罪名界分）。",
+      "notes": "跨 skill 混淆诱饵：同书兄弟 skill"
+    },
+    {
+      "id": "should-not-trigger-02",
+      "type": "should_not_trigger",
+      "prompt": "这个诈骗团伙公司化管理、有奖惩制度，能认定黑社会性质组织吗？",
+      "expected_behavior": "不应激活本 skill，应激活 organized-crime-review（四特征审查——纯线上暴力性不足还会被否）。",
+      "notes": "跨 skill 混淆诱饵：黑恶认定归属"
+    },
+    {
+      "id": "edge-01",
+      "type": "edge_case",
+      "prompt": "他通过买来的业主群信息，只给群里三个熟人逐个打电话行骗，算电信网络诈骗吗？",
+      "expected_behavior": "激活本 skill，按'不特定+多数人'双要件实质判断：着手时已有明确特定目标的倾向点对点传统诈骗；但利用非法信息圈定范围的仍可能具不特定性——给出两要素分析而非直接结论。",
+      "notes": "边界：精准诈骗与特定对象的界分"
+    }
+  ],
+  "minimum_pass_rate": 0.8,
+  "notes": "should-not-trigger-01/02 均为同书兄弟 skill 场景诱饵（two-cards-crime-line-drawing、organized-crime-review）。"
+}

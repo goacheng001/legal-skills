@@ -193,6 +193,16 @@
             "party_response": "string",
             "final_basis": "string"
           }
+        },
+        "domain_card_hit": {
+          "type": "boolean",
+          "description": "领域知识卡片是否命中",
+          "required": false
+        },
+        "domain_insights": {
+          "type": "array",
+          "description": "领域卡片审查要点（解释性知识，与 legal_articles 分列）",
+          "required": false
         }
       },
       "handoff_to_next": {

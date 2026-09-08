@@ -1,0 +1,52 @@
+{
+  "skill": "duty-crime-review",
+  "version": "0.1.0",
+  "source_book": "刑事审判实务（下册） — 最高人民法院组织编写",
+  "darwin_compatible": true,
+  "test_cases": [
+    {
+      "id": "should-trigger-01",
+      "type": "should_trigger",
+      "prompt": "他是国有控股公司的部门经理，不是在编干部，算国家工作人员吗？贪污还是职务侵占？",
+      "expected_behavior": "激活本 skill，按职务论三层筛查：看是否受国家单位委派/经出资企业党委等批准代表国有资产管理，而不是看在编与身份；非受委派的按职务侵占处理。",
+      "notes": "主体认定是核心模块"
+    },
+    {
+      "id": "should-trigger-02",
+      "type": "should_trigger",
+      "prompt": "开发商以市场价三折卖给他一套房，房本还没过户，这算受贿既遂吗？",
+      "expected_behavior": "激活本 skill，适用交易型受贿（市场价与实付价差额计数额）+未过户不影响认定（与借用按五因素区分）+实际控制即既遂。",
+      "notes": "新型受贿七型之一"
+    },
+    {
+      "id": "should-trigger-03",
+      "type": "should_trigger",
+      "prompt": "挪用公款炒股亏光了，后来做假账把账平掉，现在是挪用还是贪污？",
+      "expected_behavior": "激活本 skill，适用挪转贪四情形：虚假平账使公款难以在账面反映且无归还行为的→转化为贪污罪。",
+      "notes": "挪转贪转化规则"
+    },
+    {
+      "id": "should-not-trigger-01",
+      "type": "should_not_trigger",
+      "prompt": "判决追缴他的受贿款，可钱早就转到他妻子名下了，执行阶段怎么处理？",
+      "expected_behavior": "不应激活本 skill，应激活 criminal-procedure-review（涉案财物处置与执行衔接）。",
+      "notes": "跨 skill 混淆诱饵：同书兄弟 skill"
+    },
+    {
+      "id": "should-not-trigger-02",
+      "type": "should_not_trigger",
+      "prompt": "行贿的人主动交代了行贿事实，对他怎么处理？",
+      "expected_behavior": "不应以本 skill 主体（受贿侧）作答；行贿人处理涉及自首等总则规则与《办理行贿案件解释》，书中下册仅及于行贿要件——判定为部分适用，主答应回到总则性规则，视为边界情形。若严格判分，应认定 skill 不宜包揽行贿人自首问题。",
+      "notes": "构成要件边界诱饵（宽严两可，判分从严）"
+    },
+    {
+      "id": "edge-01",
+      "type": "edge_case",
+      "prompt": "局里开党组会集体决定违规审批，出了重大事故，谁承担渎职责任？",
+      "expected_behavior": "激活本 skill：以'集体研究'形式实施的渎职犯罪应追究负有责任的人员——消极附议、明确反对者除外；负责人员与执行人员分层，执行人刑罚不得高于决定人。",
+      "notes": "边界：集体研究的责任分配"
+    }
+  ],
+  "minimum_pass_rate": 0.8,
+  "notes": "should-not-trigger-01 为同书兄弟 skill（criminal-procedure-review）场景诱饵；should-not-trigger-02 为构成要件边界诱饵，判分从严。"
+}

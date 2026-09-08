@@ -1,0 +1,52 @@
+{
+  "skill": "three-step-sentencing",
+  "version": "0.1.0",
+  "source_book": "《刑事审判实务（上册）》 最高人民法院组织编写",
+  "darwin_compatible": true,
+  "test_cases": [
+    {
+      "id": "should_trigger-01",
+      "type": "should_trigger",
+      "prompt": "量刑建议书里把'手段残忍'又作为从重情节调了一道，对吗",
+      "expected_behavior": "应激活：禁止重复评价规则",
+      "notes": ""
+    },
+    {
+      "id": "should_trigger-02",
+      "type": "should_trigger",
+      "prompt": "两个从轻一个从重，最后刑期怎么算出来",
+      "expected_behavior": "应激活：三步流程+情节调节",
+      "notes": ""
+    },
+    {
+      "id": "should_trigger-03",
+      "type": "should_trigger",
+      "prompt": "有自首情节但调节结果比法定刑下限还低，能直接判吗",
+      "expected_behavior": "应激活：20%裁量权与审委会兜底",
+      "notes": ""
+    },
+    {
+      "id": "should_not_trigger-01",
+      "type": "should_not_trigger",
+      "prompt": "民间矛盾引发的案子能不能从宽处罚",
+      "expected_behavior": "应触发 leniency-severity-calibration",
+      "notes": "跨skill诱饵：方向判断先于量化"
+    },
+    {
+      "id": "should_not_trigger-02",
+      "type": "should_not_trigger",
+      "prompt": "这个行为构成犯罪吗",
+      "expected_behavior": "定罪问题，不激活",
+      "notes": "诱饵: 同书兄弟skill场景"
+    },
+    {
+      "id": "edge_case-01",
+      "type": "edge_case",
+      "prompt": "死缓还是立即执行怎么选",
+      "expected_behavior": "边界：转 death-penalty-filter，不激活本skill",
+      "notes": ""
+    }
+  ],
+  "minimum_pass_rate": 0.8,
+  "notes": "至少3条should_trigger+2条should_not_trigger+1条edge_case。全部should_not_trigger必须通过（诱饵容错为0），其中至少1条是同书兄弟skill场景（跨skill混淆测试）。"
+}

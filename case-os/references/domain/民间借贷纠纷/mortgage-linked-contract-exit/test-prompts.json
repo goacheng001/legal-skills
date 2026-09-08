@@ -1,0 +1,52 @@
+{
+  "skill": "mortgage-linked-contract-exit",
+  "version": "0.1.0",
+  "source_book": "《民商事审判实务（第3册）》 — 最高人民法院组织编写",
+  "darwin_compatible": true,
+  "test_cases": [
+    {
+      "id": "should-trigger-01",
+      "type": "should_trigger",
+      "prompt": "开发商延期交房一年多，我起诉解除了购房合同，银行说贷款还得继续还，不然收我房子，我该怎么办？",
+      "expected_behavior": "激活本 skill：买卖合同解除→贷款合同目的落空可解除→由出卖人向银行返还贷款本息，购房者不负返还义务",
+      "notes": "正面场景：(2019)最高法民再245号同型"
+    },
+    {
+      "id": "should-trigger-02",
+      "type": "should_trigger",
+      "prompt": "我买房办按揭，银行贷款一直批不下来，不是我信用问题，是项目手续不全，定金和首付能退吗？",
+      "expected_behavior": "激活本 skill：未能订立按揭贷款合同时按原因归责，不可归责双方的事由→解除合同、出卖人返还购房款本息或定金",
+      "notes": "正面场景：贷款未获批的解除规则"
+    },
+    {
+      "id": "should-trigger-03",
+      "type": "should_trigger",
+      "prompt": "借款合同里写'借贷关系解除的借款人要立即归还全部本息'，现在房子烂尾退房了，银行拿这条要我全额还款，这条款有效吗？",
+      "expected_behavior": "激活本 skill：该格式条款要求购房者在未取得房屋又未实际占有贷款的情况下还款，明显加重责任，无效",
+      "notes": "正面场景：格式条款无效+返还顺序"
+    },
+    {
+      "id": "should-not-trigger-01",
+      "type": "should_not_trigger",
+      "prompt": "我把自住的房子抵押给银行做了经营贷，现在还不上了，银行要行使抵押权。",
+      "expected_behavior": "不应激活本 skill：纯抵押贷款合同内部关系，无商品房买卖合同联动；应按抵押担保规则处理",
+      "notes": "诱饵：抵押贷款但无买卖合同联立"
+    },
+    {
+      "id": "should-not-trigger-02",
+      "type": "should_not_trigger",
+      "prompt": "开发商交房的泳池和宣传差太远了，我要起诉他们虚假宣传赔偿。",
+      "expected_behavior": "不应激活本 skill，应激活 promo-exemption-review（销售宣传要约三要件）",
+      "notes": "跨 skill 混淆诱饵：同为商品房买卖纠纷，但属宣传承诺违约场景"
+    },
+    {
+      "id": "edge-01",
+      "type": "edge_case",
+      "prompt": "购房合同解除了，但我的贷款已经还了五年、本金还掉一大半，这时候解除贷款合同，已还的钱和征信怎么办？",
+      "expected_behavior": "激活本 skill 并给出边界分析：解除后按返还规则由出卖人向银行返还剩余贷款本息；已还部分与征信处理超出书内规则，应如实提示按执行与征信程序另寻路径",
+      "notes": "边界：已部分履行贷款的清算细节书内未展开"
+    }
+  ],
+  "minimum_pass_rate": 0.8,
+  "notes": "含 2 条诱饵：抵押贷场景（无联立）+ 兄弟 skill promo-exemption-review 场景（跨 skill 混淆）。"
+}

@@ -1,0 +1,52 @@
+{
+  "skill": "regulatory-crime-review",
+  "version": "0.1.0",
+  "source_book": "《刑事审判实务（上册）》 最高人民法院组织编写",
+  "darwin_compatible": true,
+  "test_cases": [
+    {
+      "id": "should_trigger-01",
+      "type": "should_trigger",
+      "prompt": "这个涉枪案件，公安部鉴定标准1.8焦耳能不能直接作为犯罪依据",
+      "expected_behavior": "应激活：前置规范资格与实质检验三步",
+      "notes": ""
+    },
+    {
+      "id": "should_trigger-02",
+      "type": "should_trigger",
+      "prompt": "行为时需要审批，审判时国务院已经取消了这个许可，还能定非法经营吗",
+      "expected_behavior": "应激活：前置法变动核查→从旧兼从轻/政策引领",
+      "notes": ""
+    },
+    {
+      "id": "should_trigger-03",
+      "type": "should_trigger",
+      "prompt": "地方性法规设定许可，违反了地方规定能不能作为刑事前置法",
+      "expected_behavior": "应激活：国家规定范围检验",
+      "notes": ""
+    },
+    {
+      "id": "should_not_trigger-01",
+      "type": "should_not_trigger",
+      "prompt": "'违反国家规定'里的'规定'两个字怎么解释",
+      "expected_behavior": "应触发 interpretation-scope-check（用语解释）",
+      "notes": "诱饵: 同书兄弟skill场景"
+    },
+    {
+      "id": "should_not_trigger-02",
+      "type": "should_not_trigger",
+      "prompt": "逃税后补缴了税款滞纳金还被移送公安，怎么办",
+      "expected_behavior": "应触发 tax-crime-boundary（初犯免责通道）",
+      "notes": "诱饵: 同书兄弟skill场景"
+    },
+    {
+      "id": "edge_case-01",
+      "type": "edge_case",
+      "prompt": "行为人不知道新标准实施，按老标准做的",
+      "expected_behavior": "边界：前置法时点与主观明知交叉，应激活并检验行为时规范效力",
+      "notes": ""
+    }
+  ],
+  "minimum_pass_rate": 0.8,
+  "notes": "至少3条should_trigger+2条should_not_trigger+1条edge_case。全部should_not_trigger必须通过（诱饵容错为0），其中至少1条是同书兄弟skill场景（跨skill混淆测试）。"
+}

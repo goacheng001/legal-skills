@@ -1,0 +1,13 @@
+{
+  "slug": "loan-delivery-proof-check",
+  "source_book": "06-minshangshi-3",
+  "source_registry": "yanruyu registry candidate (cangjie-06-minshangshi-3-v2-20260908)",
+  "blind_test": {
+    "hard_pass": "83/83",
+    "decoy": "30/30",
+    "mode": "darwin_blind_v1"
+  },
+  "sha256": "50fe90bcb94227d505276aa84dd77ecc11dea536c915f8de82c01733b7c49162",
+  "copied_at": "2026-09-08",
+  "note": "知识卡片：解释性知识，冲突时以claim-basis-table与现行法优先"
+}

@@ -31,6 +31,10 @@ description: '九步法S4-要件拆解。将构成要件转化为需证明的具
 **不写 case-os-state.json 字段**。
 劳动案件专属产物路径 `intermediate/劳动覆盖层/L*/`，详见 `~/.claude/skills/labor-os/SKILL.md`。
 
+## 领域知识卡片（条件触发，2026-09-08 融合挂接）
+
+本步骤案由命中 `../case-os/references/domain-map.json` "案由映射"时，按"加载点.S4"加载对应领域卡片（每点≤3张；读卡片 SKILL.md 的 I 段骨架与 E 段步骤，作为本步骤审查框架补充）。卡片是**解释性知识**：与现行法、claim-basis-table 冲突时后者优先。命中时在输出 JSON 附加 `domain_card_hit: true` 与 `domain_insights` 数组（card_slug＋要点＋应用位置）；map 或卡片缺失/不可解析 → 静默继续并记 `domain_card_hit: false`；案由未命中不重复记种子（由 S2 统一登记）。禁止把卡片要点混入法条复验结论或 legal_articles。
+
 ## 执行流程
 
 ### 第一步：读取S2文件
@@ -109,7 +113,7 @@ mcp__pkulaw-law-search__search_article(text="民法典 第577条 违约责任构
 
 **输出格式**：JSON frontmatter + Markdown 正文
 
-**JSON frontmatter**（包含法条性质验证）：
+**JSON frontmatter**（包含法条性质验证与领域字段 `domain_card_hit`/`domain_insights`——命中卡片时必填，定义见"领域知识卡片"段）：
 
 ```json
 ---

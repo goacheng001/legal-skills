@@ -1,0 +1,52 @@
+{
+  "skill": "joint-crime-culpability",
+  "version": "0.1.0",
+  "source_book": "《刑事审判实务（上册）》 最高人民法院组织编写",
+  "darwin_compatible": true,
+  "test_cases": [
+    {
+      "id": "should_trigger-01",
+      "type": "should_trigger",
+      "prompt": "一起商量的'教训他一下'，结果同案把人捅死了，其他人怎么担责",
+      "expected_behavior": "应激活：概括合意射程+实行过限",
+      "notes": ""
+    },
+    {
+      "id": "should_trigger-02",
+      "type": "should_trigger",
+      "prompt": "团伙案八个人，怎么分主犯从犯",
+      "expected_behavior": "应激活：三阶段作用比较",
+      "notes": ""
+    },
+    {
+      "id": "should_trigger-03",
+      "type": "should_trigger",
+      "prompt": "中途害怕退出了，他们继续把事办成了，我算既遂还是中止",
+      "expected_behavior": "应激活：共犯中止有效性",
+      "notes": ""
+    },
+    {
+      "id": "should_not_trigger-01",
+      "type": "should_not_trigger",
+      "prompt": "正当防卫把人打伤怎么认定",
+      "expected_behavior": "应触发 self-defense-review",
+      "notes": "诱饵: 同书兄弟skill场景"
+    },
+    {
+      "id": "should_not_trigger-02",
+      "type": "should_not_trigger",
+      "prompt": "主犯判得比从犯重多少",
+      "expected_behavior": "量刑幅度咨询→应触发 three-step/宽严相济，不激活本skill的认定功能",
+      "notes": "跨skill诱饵：认定完成后才轮到幅度"
+    },
+    {
+      "id": "edge_case-01",
+      "type": "edge_case",
+      "prompt": "给斗殴双方卖水的店主算不算帮助犯",
+      "expected_behavior": "边界：中立帮助行为判断轴（紧迫性×作用），激活",
+      "notes": ""
+    }
+  ],
+  "minimum_pass_rate": 0.8,
+  "notes": "至少3条should_trigger+2条should_not_trigger+1条edge_case。全部should_not_trigger必须通过（诱饵容错为0），其中至少1条是同书兄弟skill场景（跨skill混淆测试）。"
+}

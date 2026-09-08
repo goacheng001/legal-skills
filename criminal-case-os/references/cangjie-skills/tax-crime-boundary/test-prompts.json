@@ -1,0 +1,52 @@
+{
+  "skill": "tax-crime-boundary",
+  "version": "0.1.0",
+  "source_book": "《刑事审判实务（上册）》 最高人民法院组织编写",
+  "darwin_compatible": true,
+  "test_cases": [
+    {
+      "id": "should_trigger-01",
+      "type": "should_trigger",
+      "prompt": "为上市虚增业绩开的专票，税款都交了，构成虚开增值税专用发票罪吗",
+      "expected_behavior": "应激活：目的性限缩+非A或非B",
+      "notes": ""
+    },
+    {
+      "id": "should_trigger-02",
+      "type": "should_trigger",
+      "prompt": "税务让补缴罚款都履行完了，为什么还移送公安",
+      "expected_behavior": "应激活：201条第4款初犯免责检查单",
+      "notes": ""
+    },
+    {
+      "id": "should_trigger-03",
+      "type": "should_trigger",
+      "prompt": "对开环开发票会不会被定虚开",
+      "expected_behavior": "应激活：骗抵目的检验",
+      "notes": ""
+    },
+    {
+      "id": "should_not_trigger-01",
+      "type": "should_not_trigger",
+      "prompt": "骗取出口退税的行为方式有哪些",
+      "expected_behavior": "出口退税实行行为认定，不激活出罪框架",
+      "notes": "跨skill诱饵：同章他罪"
+    },
+    {
+      "id": "should_not_trigger-02",
+      "type": "should_not_trigger",
+      "prompt": "增值税专用发票和普通发票有什么区别",
+      "expected_behavior": "税法常识，不激活",
+      "notes": "诱饵: 同书兄弟skill场景"
+    },
+    {
+      "id": "edge_case-01",
+      "type": "edge_case",
+      "prompt": "立案后才补缴的税款算不算数",
+      "expected_behavior": "边界：时点规则→仅作从宽情节，激活",
+      "notes": ""
+    }
+  ],
+  "minimum_pass_rate": 0.8,
+  "notes": "至少3条should_trigger+2条should_not_trigger+1条edge_case。全部should_not_trigger必须通过（诱饵容错为0），其中至少1条是同书兄弟skill场景（跨skill混淆测试）。"
+}

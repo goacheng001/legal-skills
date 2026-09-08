@@ -1,0 +1,52 @@
+{
+  "skill": "drug-quantity-death-review",
+  "version": "0.1.0",
+  "source_book": "刑事审判实务（下册） — 最高人民法院组织编写",
+  "darwin_compatible": true,
+  "test_cases": [
+    {
+      "id": "should-trigger-01",
+      "type": "should_trigger",
+      "prompt": "他既卖冰毒又卖氯胺酮，数量怎么加在一起量刑？",
+      "expected_behavior": "激活本 skill：有定罪量刑数量标准的毒品按与海洛因标准的比例折算累加；无标准的参考折算表并综合毒害性、滥用情况、纯度等；裁判文书客观表述、不明写折算总量。",
+      "notes": "多种毒品折算是核心规则"
+    },
+    {
+      "id": "should-trigger-02",
+      "type": "should_trigger",
+      "prompt": "共同贩毒案里两个主犯作用差不多，都能判死刑吗？",
+      "expected_behavior": "激活本 skill：数量超过死刑标准但未达巨大的，一般只对罪责最大的一名主犯判处死刑；作用相当且均无从重情节的可不判死刑。",
+      "notes": "共同犯罪死刑分配"
+    },
+    {
+      "id": "should-trigger-03",
+      "type": "should_trigger",
+      "prompt": "他是累犯又是毒品再犯，两边都从重会不会重复评价？",
+      "expected_behavior": "激活本 skill，适用竞合三规则：同一前科同时构成的不重复从重（一个定幅度、一个作幅度内考量）；不同前科幅度更大；不同现行犯罪分别从重后并罚；文书同时援引两条款。",
+      "notes": "累犯再犯竞合是特色规则"
+    },
+    {
+      "id": "should-not-trigger-01",
+      "type": "should_not_trigger",
+      "prompt": "他辩称那些毒品只是帮别人代买的，自己没赚差价，怎么审查？",
+      "expected_behavior": "不应激活本 skill，应激活 drug-crime-review（代购三型定性与证据审查）。",
+      "notes": "跨 skill 混淆诱饵：同书兄弟 skill"
+    },
+    {
+      "id": "should-not-trigger-02",
+      "type": "should_not_trigger",
+      "prompt": "毒品案件的监听录音只有文字摘录，能不能作为证据？",
+      "expected_behavior": "不应激活本 skill，应激活 criminal-evidence-review（技侦证据的移送与质证要求）。",
+      "notes": "跨 skill 混淆诱饵：证据能力问题"
+    },
+    {
+      "id": "edge-01",
+      "type": "edge_case",
+      "prompt": "为了好运输把冰毒化成了水溶液，案发时称重五百公斤，按五百公斤算吗？",
+      "expected_behavior": "激活本 skill：属临时改变毒品常规形态逃避查缉的情形，可将溶液蒸馏还原后的高纯度毒品数量作为量刑依据；同时该案系液态毒品应做含量鉴定。",
+      "notes": "边界：纯度折算的例外情形"
+    }
+  ],
+  "minimum_pass_rate": 0.8,
+  "notes": "should-not-trigger-01（drug-crime-review）、should-not-trigger-02（criminal-evidence-review）为兄弟 skill 诱饵。"
+}

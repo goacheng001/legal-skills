@@ -1,0 +1,52 @@
+{
+  "skill": "illegal-evidence-exclusion",
+  "version": "0.1.0",
+  "source_book": "刑事审判实务（下册） — 最高人民法院组织编写",
+  "darwin_compatible": true,
+  "test_cases": [
+    {
+      "id": "should-trigger-01",
+      "type": "should_trigger",
+      "prompt": "被告人辩称被连续讯问十几个小时不让睡觉，律师要申请排除供述，申请要满足什么条件？",
+      "expected_behavior": "激活本 skill，说明初步举证的'线索+材料'二分标准、疲劳审讯的综合认定（同监室证言、提讯证、录像）及法院三种审查处理。",
+      "notes": "排非申请要件是核心模块"
+    },
+    {
+      "id": "should-trigger-02",
+      "type": "should_trigger",
+      "prompt": "应当对讯问录音录像的案件，侦查机关说设备坏了没有录像，笔录还能用吗？",
+      "expected_behavior": "激活本 skill，适用'现有证据不能排除以非法方法收集'规则：应录未录→不能排除→排除供述。",
+      "notes": "录像四查是该 skill 的关键技术规则"
+    },
+    {
+      "id": "should-trigger-03",
+      "type": "should_trigger",
+      "prompt": "一审没理睬排非申请直接采信口供判了，二审该怎么办？",
+      "expected_behavior": "激活本 skill，适用二审第三种情形：应当裁定撤销原判、发回重审。",
+      "notes": "二审排非处理是流程第8步"
+    },
+    {
+      "id": "should-not-trigger-01",
+      "type": "should_not_trigger",
+      "prompt": "鉴定意见书上漏了一个鉴定人的签名，这份鉴定意见怎么处理？",
+      "expected_behavior": "不应激活本 skill（这是缺陷鉴定的绝对排除/瑕疵问题），应激活 criminal-evidence-review。",
+      "notes": "跨 skill 混淆诱饵：缺陷排除≠非法取证排除"
+    },
+    {
+      "id": "should-not-trigger-02",
+      "type": "should_not_trigger",
+      "prompt": "公诉机关撤回了认罪认罚具结书并上调了量刑建议，法院怎么处理？",
+      "expected_behavior": "不应激活本 skill，应激活 plea-lenient-review。",
+      "notes": "跨 skill 混淆诱饵：同书兄弟 skill"
+    },
+    {
+      "id": "edge-01",
+      "type": "edge_case",
+      "prompt": "排非调查时公诉人只出具了盖章的情况说明，侦查人员不出庭，怎么办？",
+      "expected_behavior": "激活本 skill：不得以盖章说明替代出庭；经通知不出庭且不能排除非法取证的，对有关证据应当排除。",
+      "notes": "边界：说明材料的证据资格问题"
+    }
+  ],
+  "minimum_pass_rate": 0.8,
+  "notes": "should-not-trigger-01 为同书兄弟 skill（criminal-evidence-review）混淆诱饵；should-not-trigger-02 为另一兄弟 skill（plea-lenient-review）诱饵。"
+}

@@ -1,0 +1,52 @@
+{
+  "skill": "organized-crime-review",
+  "version": "0.1.0",
+  "source_book": "刑事审判实务（下册） — 最高人民法院组织编写",
+  "darwin_compatible": true,
+  "test_cases": [
+    {
+      "id": "should-trigger-01",
+      "type": "should_trigger",
+      "prompt": "这个团伙有公司架构、给成员发工资、垄断了本地砂石生意，偶尔打打架，够不够黑社会性质组织？",
+      "expected_behavior": "激活本 skill，逐项审查四特征：经济特征看利益是否豢养组织、行为特征看暴力底色与心理强制、危害性特征看区域行业非法控制，缺一不可。",
+      "notes": "四特征闸门是核心"
+    },
+    {
+      "id": "should-trigger-02",
+      "type": "should_trigger",
+      "prompt": "借款时双方都同意砍头息，后来还不上他找人堵门泼漆，这算套路贷吗？",
+      "expected_behavior": "激活本 skill：自愿接受砍头息属高利放贷而非套路贷；后续暴力催收按相应罪名（催收非法债务/寻衅滋事等）处理，是否恶势力另按三特征判断。",
+      "notes": "套路贷与高利贷界分是高频争点"
+    },
+    {
+      "id": "should-trigger-03",
+      "type": "should_trigger",
+      "prompt": "主犯被抓后，他媳妇名下冒出来好几套房子，说是她自己的，能没收吗？",
+      "expected_behavior": "激活本 skill，适用'高度可能性'六条件：定罪事实查清+期间获取+证据未达确实充分+公诉举证+合法收入不足以形成+辩解不成立，逐项检验后方可追缴没收。",
+      "notes": "涉黑财产标准是本 skill 特色"
+    },
+    {
+      "id": "should-not-trigger-01",
+      "type": "should_not_trigger",
+      "prompt": "把银行卡卖给诈骗团伙的人，和诈骗团伙算共同犯罪吗？",
+      "expected_behavior": "不应激活本 skill，应激活 two-cards-crime-line-drawing（两卡共犯界分）。",
+      "notes": "跨 skill 混淆诱饵：同书兄弟 skill"
+    },
+    {
+      "id": "should-not-trigger-02",
+      "type": "should_not_trigger",
+      "prompt": "境外电诈园区的管理方收场地费抽成，这个'园区集团'怎么认定和处理？",
+      "expected_behavior": "不应激活本 skill，应激活 telecom-fraud-review（管理控制型犯罪集团）。",
+      "notes": "跨 skill 混淆诱饵：管理控制型集团归属"
+    },
+    {
+      "id": "edge-01",
+      "type": "edge_case",
+      "prompt": "一家催收公司全是电话和短信施压，从没动过手，公司结构稳定、垄断了本地银行委外催收业务，能定恶势力吗？",
+      "expected_behavior": "激活本 skill：单纯线上方式、无暴力或以暴力相威胁的现实可能性的，不具'为非作恶、欺压残害群众'特征，一般不认定恶势力；重点审查有无线下暴力及心理强制的证据。",
+      "notes": "边界：软暴力泛化的防线"
+    }
+  ],
+  "minimum_pass_rate": 0.8,
+  "notes": "should-not-trigger-01/02 均为同书兄弟 skill 场景诱饵。"
+}

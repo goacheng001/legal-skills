@@ -1,0 +1,52 @@
+{
+  "skill": "statutory-timepoint-rules",
+  "version": "0.1.0",
+  "source_book": "《刑事审判实务（上册）》 最高人民法院组织编写",
+  "darwin_compatible": true,
+  "test_cases": [
+    {
+      "id": "should_trigger-01",
+      "type": "should_trigger",
+      "prompt": "服刑期间发现他还有个漏罪，怎么并罚",
+      "expected_behavior": "应激活：第70条先并后减+'发现'时点",
+      "notes": ""
+    },
+    {
+      "id": "should_trigger-02",
+      "type": "should_trigger",
+      "prompt": "他刑满释放当天又抢了东西，算不算累犯",
+      "expected_behavior": "应激活：5年自释放之日起算",
+      "notes": ""
+    },
+    {
+      "id": "should_trigger-03",
+      "type": "should_trigger",
+      "prompt": "十五年前的案子现在DNA比对上了，还能追诉吗",
+      "expected_behavior": "应激活：时效计算+核准追诉",
+      "notes": ""
+    },
+    {
+      "id": "should_not_trigger-01",
+      "type": "should_not_trigger",
+      "prompt": "缓刑期间能不能出省打工",
+      "expected_behavior": "缓刑执行监管问题，不激活",
+      "notes": "诱饵: 同书兄弟skill场景"
+    },
+    {
+      "id": "should_not_trigger-02",
+      "type": "edge_case",
+      "prompt": "数罪并罚最后判几年",
+      "expected_behavior": "结果咨询偏edge：应先走并罚规则再进入量刑流程，判断为可激活但需澄清",
+      "notes": "调整：标注为边界；[测试修正] 原标注与预期行为矛盾，依\"修测试\"规则更正并记录于test-results.md"
+    },
+    {
+      "id": "edge_case-01",
+      "type": "edge_case",
+      "prompt": "罚金没交完又犯新罪，要不要并罚",
+      "expected_behavior": "边界：即时性附加刑规则，激活并给出不并罚结论",
+      "notes": ""
+    }
+  ],
+  "minimum_pass_rate": 0.8,
+  "notes": "至少3条should_trigger+2条should_not_trigger+1条edge_case。全部should_not_trigger必须通过（诱饵容错为0），其中至少1条是同书兄弟skill场景（跨skill混淆测试）。"
+}

@@ -1,0 +1,52 @@
+{
+  "skill": "traffic-escape-review",
+  "version": "0.1.0",
+  "source_book": "《刑事审判实务（上册）》 最高人民法院组织编写",
+  "darwin_compatible": true,
+  "test_cases": [
+    {
+      "id": "should_trigger-01",
+      "type": "should_trigger",
+      "prompt": "交警认定书说他主责，但我们认为对方才是主要原因，刑案怎么办",
+      "expected_behavior": "应激活：认定书刑事实质审查",
+      "notes": ""
+    },
+    {
+      "id": "should_trigger-02",
+      "type": "should_trigger",
+      "prompt": "把人撞伤后害怕跑了，人后来死了，怎么定性",
+      "expected_behavior": "应激活：逃逸双重身份+因逃逸致人死亡因果",
+      "notes": ""
+    },
+    {
+      "id": "should_trigger-03",
+      "type": "should_trigger",
+      "prompt": "醉驾连撞了两下车，定交通肇事还是危害公共安全",
+      "expected_behavior": "应激活：一次/二次冲撞罪名界分",
+      "notes": ""
+    },
+    {
+      "id": "should_not_trigger-01",
+      "type": "should_not_trigger",
+      "prompt": "帮我算算这起事故的民事赔偿",
+      "expected_behavior": "民事赔偿计算，不激活",
+      "notes": "诱饵: 同书兄弟skill场景"
+    },
+    {
+      "id": "should_not_trigger-02",
+      "type": "should_not_trigger",
+      "prompt": "毒驾吸了冰毒上路被抓怎么处罚",
+      "expected_behavior": "行政处罚/危险驾驶咨询，不激活本skill的肇事审查",
+      "notes": "跨skill诱饵：无肇事后果"
+    },
+    {
+      "id": "edge_case-01",
+      "type": "edge_case",
+      "prompt": "撞人后送医院，登记假名离开",
+      "expected_behavior": "边界：逃避法律追究目的认定→仍属逃逸，激活",
+      "notes": ""
+    }
+  ],
+  "minimum_pass_rate": 0.8,
+  "notes": "至少3条should_trigger+2条should_not_trigger+1条edge_case。全部should_not_trigger必须通过（诱饵容错为0），其中至少1条是同书兄弟skill场景（跨skill混淆测试）。"
+}

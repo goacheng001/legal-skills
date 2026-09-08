@@ -1,0 +1,52 @@
+{
+  "skill": "plea-lenient-review",
+  "version": "0.1.0",
+  "source_book": "刑事审判实务（下册） — 最高人民法院组织编写",
+  "darwin_compatible": true,
+  "test_cases": [
+    {
+      "id": "should-trigger-01",
+      "type": "should_trigger",
+      "prompt": "认罪认罚案件，检察院建议判三年，我们按量刑指南算下来至少四年半，必须采纳吗？",
+      "expected_behavior": "激活本 skill，适用'明显不当'审查：偏离幅度过大且无依据的属明显不当→告知检察院调整；不调整或调整后仍不当→依法判决。",
+      "notes": "量刑建议审查是核心模块"
+    },
+    {
+      "id": "should-trigger-02",
+      "type": "should_trigger",
+      "prompt": "被告人签了具结书，开庭时辩护人却提出侦查取证违法，公诉人说这算被告人反悔、要撤具结书，对吗？",
+      "expected_behavior": "激活本 skill：辩护人依法发表辩护意见不当然视为被告人反悔（尚某某、薛某案），是否认罪认罚以被告人本人意愿与悔罪稳定性为准。",
+      "notes": "认罪认定边界的标志性场景"
+    },
+    {
+      "id": "should-trigger-03",
+      "type": "should_trigger",
+      "prompt": "他认罪认罚还自首又全额退赔，最多能减多少？",
+      "expected_behavior": "激活本 skill，按 30%/60% 阶梯与不重复评价规则计算从宽幅度，并结合认罪的阶段、主动性、稳定性调幅。",
+      "notes": "从宽幅度阶梯是高频问题"
+    },
+    {
+      "id": "should-not-trigger-01",
+      "type": "should_not_trigger",
+      "prompt": "这个案子能不能用速裁程序十分钟审完？",
+      "expected_behavior": "不应激活本 skill，应激活 speedy-trial-gatekeeping（速裁适用条件与排除情形）。",
+      "notes": "跨 skill 混淆诱饵：同书兄弟 skill"
+    },
+    {
+      "id": "should-not-trigger-02",
+      "type": "should_not_trigger",
+      "prompt": "被告人只认罪不认罚，量刑上怎么处理？",
+      "expected_behavior": "不应以认罪认罚从宽规则作答（不满足认罚要件）；应转普通程序处理并按坦白等情节量刑——判定为本 skill 不适用而非套用从宽阶梯。",
+      "notes": "构成要件边界诱饵"
+    },
+    {
+      "id": "edge-01",
+      "type": "edge_case",
+      "prompt": "具结书里量刑建议没有缓刑，开庭时被告人当庭请求判缓刑，还算认罪认罚吗？",
+      "expected_behavior": "激活本 skill：法庭辩论终结前应最后询问一次是否仍认罪认罚、接受量刑建议；仍接受的认定继续认罪认罚，否则按对量刑建议有异议处理。",
+      "notes": "边界：认罚意愿的动态确认"
+    }
+  ],
+  "minimum_pass_rate": 0.8,
+  "notes": "should-not-trigger-01 为同书兄弟 skill（speedy-trial-gatekeeping）场景诱饵。"
+}

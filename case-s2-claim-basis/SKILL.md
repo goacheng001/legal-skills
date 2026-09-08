@@ -48,6 +48,14 @@ description: '九步法S2-请求权基础。确定每项请求权所依据的法
 - 表外案由 → 照旧走五步找法 + 元典复验，并在输出中记 `claim_basis_table_hit: false`（供数据驱动扩表）。
 case-os 自有的 `nine_step_*.json` 只管**流程契约与门禁**（schema/检查清单/失败模式），不再作为法律知识来源维护。
 
+**领域知识卡片加载（domain-map 挂接，2026-09-08 融合 v0.1）**：
+查表/找法确定案由后，查 `../case-os/references/domain-map.json` 的"案由映射"（支持别名）：
+- 命中 → 按"加载点.S2"加载对应卡片（每点≤3张），读 `../case-os/references/domain/<案由>/<slug>/SKILL.md` 的 I 段（骨架）与 E 段（步骤）作为该案由审查框架补充；输出记 `domain_card_hit: true` 并在 legal_articles 之外单列 `domain_insights`；
+- S3/S4/S6/S7 按 map 中各自加载点同理取用；
+- 卡片是**解释性知识**：与 claim-basis-table、现行法冲突时后者优先，卡片只补框架与要点、不替代法条；
+- 未命中 → 记 `domain_card_hit: false` 并按 map"未命中登记"格式记一条种子（案由名+缺失能力一句话）。
+- **降级兜底**：`domain-map.json` 或对应卡片目录缺失/不可解析时 → 静默继续主流程（比照劳动案由扩展惯例），记 `domain_card_hit: false`，不得因知识层缺失阻断本步骤。
+
 **操作步骤**：
 1. 读取 S1 的所有诉讼请求
 2. 针对每项请求权，确定所依据的法律规范：
@@ -139,6 +147,10 @@ mcp__pkulaw-law-search__get_article(title="中华人民共和国民法典", numb
 ---
 {
   "step_id": "S2",
+  "domain_card_hit": true,
+  "domain_insights": [
+    {"card_slug": "loan-interest-cap-calculator", "insight": "利息+违约金+其他费用合计不得超合同成立时一年期LPR四倍", "applied_at": "利率上限锁定"}
+  ],
   "claim_basis_analysis": {
     "identified_rights_bases": {
       "defendant_1": {
@@ -261,6 +273,7 @@ mcp__pkulaw-law-search__get_article(title="中华人民共和国民法典", numb
 - `../case-os/references/nine_step_checklist.json` — 法条性质鉴别依据（第 16、17 项）
 - `../case-os/schema/nine_step_core_schema.json` — s2_claim_bases 字段定义
 - `../case-os/examples/nine_step_loan_case/expected_s2_claim_bases.json` — 完整输出示例
+- `../case-os/references/domain-map.json` — 案由→领域知识卡片映射（2026-09-08 融合挂接；卡片位于 `../case-os/references/domain/<案由>/<slug>/`）
 
 **本地资源**（新增）：
 - `schema/s2_output_schema.json` — S2 输出结构定义
@@ -289,7 +302,7 @@ mcp__pkulaw-law-search__get_article(title="中华人民共和国民法典", numb
 - `intermediate/被告九步法/S2-请求权基础/`
 
 **输出格式**：
-- JSON frontmatter：包含 claim_basis_analysis 对象
+- JSON frontmatter：包含 `claim_basis_analysis` 对象与领域字段（`domain_card_hit`/`domain_insights`，案由命中卡片时必填，字段定义见 `schema/s2_output_schema.json`）
 - Markdown 正文：展示法条性质鉴别过程和结果
 
 **关键字段**（供 S4 读取）：
@@ -298,6 +311,8 @@ mcp__pkulaw-law-search__get_article(title="中华人民共和国民法典", numb
 - `legal_effect`：法律效果数组
 - `needs_replacement`：是否需要替换（true/false）
 - `basis_confirmation_records`：请求权基础确认记录
+- `domain_card_hit`：领域知识卡片是否命中（true/false，见"领域知识卡片加载"段）
+- `domain_insights`：领域卡片审查要点数组（命中时必填；卡片是解释性知识，不改变 `legal_articles` 的法条口径，仅补充审查框架与要点）
 
 **法条性质说明**：
 - **完全性法条**：S4 可用于要件拆解

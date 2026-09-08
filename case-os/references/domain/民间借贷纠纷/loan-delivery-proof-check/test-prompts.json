@@ -1,0 +1,52 @@
+{
+  "skill": "loan-delivery-proof-check",
+  "version": "0.1.0",
+  "source_book": "《民商事审判实务（第3册）》 — 最高人民法院组织编写",
+  "darwin_compatible": true,
+  "test_cases": [
+    {
+      "id": "should-trigger-01",
+      "type": "should_trigger",
+      "prompt": "原告拿着80万的借条说全是现金交付，说不出钱从哪取的，交付时间地点也说不清楚，这官司怎么判？",
+      "expected_behavior": "激活本 skill：五查法审查现金交付（查财产/习惯/细节/分别问/察神态），核对取款记录与陈述一致性，交付事实不予认定的风险提示",
+      "notes": "正面场景：大额现金交付（书内海口案同型）"
+    },
+    {
+      "id": "should-trigger-02",
+      "type": "should_trigger",
+      "prompt": "我只有给对方的银行转账记录，没有借条，起诉他还款，他说这是还他的货款，我该怎么办？",
+      "expected_behavior": "激活本 skill：转账凭证型举证分配——被告须说明并证明基础法律关系，其举证成立后原告须进一步证明借贷合意",
+      "notes": "正面场景：转账凭证型举证往返"
+    },
+    {
+      "id": "should-trigger-03",
+      "type": "should_trigger",
+      "prompt": "法院通知原告本人到庭说明借款经过，他拒不到庭也不签保证书，也没有别的证据，怎么办？",
+      "expected_behavior": "激活本 skill：当事人到庭义务——拒不到庭/拒签保证书且待证事实无其他证据的，对其主张的交付事实不予认定",
+      "notes": "正面场景：本人到庭机制"
+    },
+    {
+      "id": "should-not-trigger-01",
+      "type": "should_not_trigger",
+      "prompt": "被告对我主张的借款全部承认，双方没有争议， 法院直接判就行了吧？",
+      "expected_behavior": "不应激活本 skill：无对抗的自认案件应先走 loan-sham-litigation-screen（虚假诉讼筛查）",
+      "notes": "跨 skill 混淆诱饵：无对抗借贷先筛查虚假诉讼"
+    },
+    {
+      "id": "should-not-trigger-02",
+      "type": "should_not_trigger",
+      "prompt": "这份投资协议约定每年固定回报12%，能按借贷处理吗？",
+      "expected_behavior": "不应激活本 skill，应激活 loan-relation-characterization（关系定性）",
+      "notes": "跨 skill 混淆诱饵：定性在先，交付审查在后"
+    },
+    {
+      "id": "edge-01",
+      "type": "edge_case",
+      "prompt": "两家公司之间的借款，没签书面合同但钱已经转了，合同成立吗？",
+      "expected_behavior": "激活本 skill 并给出边界处理：法人间借贷为诺成+要式合同，但一方已履行主要义务（付款）且对方接受的，即使无书面形式合同仍成立；与自然人借贷的实践合同逻辑区分",
+      "notes": "边界：法人间借贷的形式补正"
+    }
+  ],
+  "minimum_pass_rate": 0.8,
+  "notes": "含 2 条兄弟 skill 诱饵（loan-sham-litigation-screen、loan-relation-characterization）。"
+}

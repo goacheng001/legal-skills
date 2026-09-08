@@ -16,6 +16,10 @@ description: '九步法S3-抗辩规范和反诉识别。梳理三类抗辩（权
 
 ---
 
+## 领域知识卡片（条件触发，2026-09-08 融合挂接）
+
+本步骤案由命中 `../case-os/references/domain-map.json` "案由映射"时，按"加载点.S3"加载对应领域卡片（每点≤3张；读卡片 SKILL.md 的 I 段骨架与 E 段步骤，作为本步骤审查框架补充）。卡片是**解释性知识**：与现行法、claim-basis-table 冲突时后者优先。命中时在输出 JSON 附加 `domain_card_hit: true` 与 `domain_insights` 数组（card_slug＋要点＋应用位置）；map 或卡片缺失/不可解析 → 静默继续并记 `domain_card_hit: false`；案由未命中不重复记种子（由 S2 统一登记）。禁止把卡片要点混入法条复验结论或 legal_articles。
+
 ## 执行流程
 
 ### 第一步：读取S2文件
@@ -97,7 +101,7 @@ mcp__pkulaw-law-search__search_article(text="同时履行抗辩权")
 
 **输出格式**：JSON frontmatter + Markdown 正文
 
-**JSON frontmatter**（包含抗辩分析和反诉识别）：
+**JSON frontmatter**（包含抗辩分析、反诉识别与领域字段 `domain_card_hit`/`domain_insights`——命中卡片时必填，定义见"领域知识卡片"段）：
 
 ```json
 ---
@@ -190,6 +194,7 @@ mcp__pkulaw-law-search__search_article(text="同时履行抗辩权")
 - `mcp__pkulaw-law-search__get_article` — 法条内容获取（北大法宝MCP，当前已禁用）
 
 **引用资源**（引用 live case-os 资源，不复制）：
+- `../case-os/references/domain-map.json` — 案由→领域知识卡片映射（加载点.S3；卡片在 `../case-os/references/domain/<案由>/`）
 - `../case-os/schema/nine_step_core_schema.json` — defense_type 枚举值定义
 - `../case-os/examples/nine_step_loan_case/expected_s4_elements.json` — 抗辩类型使用示例
 

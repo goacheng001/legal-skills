@@ -1,0 +1,52 @@
+{
+  "skill": "ecommerce-smuggling-review",
+  "version": "0.1.0",
+  "source_book": "《刑事审判实务（上册）》 最高人民法院组织编写",
+  "darwin_compatible": true,
+  "test_cases": [
+    {
+      "id": "should_trigger-01",
+      "type": "should_trigger",
+      "prompt": "帮客户把境外网站订单导入国内跨境电商平台申报，算走私吗",
+      "expected_behavior": "应激活：推单两步审查",
+      "notes": ""
+    },
+    {
+      "id": "should_trigger-02",
+      "type": "should_trigger",
+      "prompt": "用家人免税额度买免税品转卖，是不是走私",
+      "expected_behavior": "应激活：套代购伪报判断（对照）",
+      "notes": ""
+    },
+    {
+      "id": "should_trigger-03",
+      "type": "should_trigger",
+      "prompt": "海淘转运公司转运的商品被认定伪报贸易性质，有道理吗",
+      "expected_behavior": "应激活：二次交易/两段贸易关系检验",
+      "notes": ""
+    },
+    {
+      "id": "should_not_trigger-01",
+      "type": "should_not_trigger",
+      "prompt": "低报价格进口设备怎么认定走私",
+      "expected_behavior": "传统走私，直接认定，不激活本skill",
+      "notes": "跨skill诱饵：传统伪报"
+    },
+    {
+      "id": "should_not_trigger-02",
+      "type": "should_not_trigger",
+      "prompt": "跨境电商综合税税率是多少",
+      "expected_behavior": "税率查询，不激活",
+      "notes": "诱饵: 同书兄弟skill场景"
+    },
+    {
+      "id": "edge_case-01",
+      "type": "edge_case",
+      "prompt": "消费者真实的自用订单只是平台晚申报",
+      "expected_behavior": "边界：形式违规vs税款流失，激活并倾向谦抑",
+      "notes": ""
+    }
+  ],
+  "minimum_pass_rate": 0.8,
+  "notes": "至少3条should_trigger+2条should_not_trigger+1条edge_case。全部should_not_trigger必须通过（诱饵容错为0），其中至少1条是同书兄弟skill场景（跨skill混淆测试）。"
+}

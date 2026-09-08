@@ -1,0 +1,52 @@
+{
+  "skill": "self-defense-review",
+  "version": "0.1.0",
+  "source_book": "《刑事审判实务（上册）》 最高人民法院组织编写",
+  "darwin_compatible": true,
+  "test_cases": [
+    {
+      "id": "should_trigger-01",
+      "type": "should_trigger",
+      "prompt": "对方拿刀闯进我店里，我抄起菜刀把他砍伤了，算正当防卫吗",
+      "expected_behavior": "应激活：侵害正在进行三情境+限度综合评价",
+      "notes": ""
+    },
+    {
+      "id": "should_trigger-02",
+      "type": "should_trigger",
+      "prompt": "被打了好几刀之后拔刀还击把人捅死了，是不是防卫过当",
+      "expected_behavior": "应激活：整体评价+反对唯结果论",
+      "notes": ""
+    },
+    {
+      "id": "should_trigger-03",
+      "type": "should_trigger",
+      "prompt": "我平时带刀防身，遇到抢劫用了，影响防卫认定吗",
+      "expected_behavior": "应激活：防范性备械不阻却防卫",
+      "notes": ""
+    },
+    {
+      "id": "should_not_trigger-01",
+      "type": "should_not_trigger",
+      "prompt": "两个人约好架，都受了伤，谁构成犯罪",
+      "expected_behavior": "互殴定性但无防卫主张场景→仍属本skill互殴界分？此处设计为应触发joint-crime-culpability（共同斗殴责任）",
+      "notes": "跨skill诱饵：约架互殴无防卫争议时走共同犯罪责任"
+    },
+    {
+      "id": "should_not_trigger-02",
+      "type": "should_not_trigger",
+      "prompt": "他把我的门砸了，我能不能要求赔偿",
+      "expected_behavior": "民事侵权咨询，不激活",
+      "notes": "诱饵: 同书兄弟skill场景"
+    },
+    {
+      "id": "edge_case-01",
+      "type": "edge_case",
+      "prompt": "对方先动手，我反抗时他已经停手了，我又补了两下",
+      "expected_behavior": "边界：侵害已结束→事后报复，激活后应作否定防卫判断",
+      "notes": ""
+    }
+  ],
+  "minimum_pass_rate": 0.8,
+  "notes": "至少3条should_trigger+2条should_not_trigger+1条edge_case。全部should_not_trigger必须通过（诱饵容错为0），其中至少1条是同书兄弟skill场景（跨skill混淆测试）。"
+}

@@ -1,0 +1,52 @@
+{
+  "skill": "death-penalty-filter",
+  "version": "0.1.0",
+  "source_book": "《刑事审判实务（上册）》 最高人民法院组织编写",
+  "darwin_compatible": true,
+  "test_cases": [
+    {
+      "id": "should_trigger-01",
+      "type": "should_trigger",
+      "prompt": "故意杀人案拟判死刑立即执行，共犯还有一个在逃",
+      "expected_behavior": "应激活：三重过滤（唯一结论→罪责最严重→政策）",
+      "notes": ""
+    },
+    {
+      "id": "should_trigger-02",
+      "type": "should_trigger",
+      "prompt": "雇凶杀人，雇主没动手，判谁死刑",
+      "expected_behavior": "应激活：雇凶者罪责分层规则",
+      "notes": ""
+    },
+    {
+      "id": "should_trigger-03",
+      "type": "should_trigger",
+      "prompt": "民间矛盾激化的杀人案，死刑要慎重到什么程度",
+      "expected_behavior": "应激活：政策过滤的类别区别",
+      "notes": ""
+    },
+    {
+      "id": "should_not_trigger-01",
+      "type": "should_not_trigger",
+      "prompt": "这案子判几年合适",
+      "expected_behavior": "一般量刑咨询，不激活（应走宽严相济/三步量刑法）",
+      "notes": "诱饵: 同书兄弟skill场景"
+    },
+    {
+      "id": "should_not_trigger-02",
+      "type": "should_not_trigger",
+      "prompt": "故意伤害致死和故意杀人的区别",
+      "expected_behavior": "构成要件界分问题，不激活本skill",
+      "notes": "诱饵: 同书兄弟skill场景"
+    },
+    {
+      "id": "edge_case-01",
+      "type": "edge_case",
+      "prompt": "论罪该杀但被告人赔偿并获谅解",
+      "expected_behavior": "边界：死缓转换+赔偿分量评估，激活但按政策过滤处理",
+      "notes": ""
+    }
+  ],
+  "minimum_pass_rate": 0.8,
+  "notes": "至少3条should_trigger+2条should_not_trigger+1条edge_case。全部should_not_trigger必须通过（诱饵容错为0），其中至少1条是同书兄弟skill场景（跨skill混淆测试）。"
+}

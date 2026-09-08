@@ -1,0 +1,52 @@
+{
+ "skill": "drug-crime-review",
+ "version": "0.1.0",
+ "source_book": "刑事审判实务（下册） — 最高人民法院组织编写",
+ "darwin_compatible": true,
+ "test_cases": [
+  {
+   "id": "should-trigger-01",
+   "type": "should_trigger",
+   "prompt": "他说只是帮老乡代买冰毒，自己顺手扣了一点吸，扣的那点算不算贩卖？",
+   "expected_behavior": "激活本 skill，适用代购三型矩阵与蹭吸规则：收取截留部分毒品属'变相加价'，形式上可评价为贩卖毒品罪；符合蹭吸出罪三条件（托购者事先联系+仅用于吸食+少量自吸）的可不作犯罪处理。",
+   "notes": "代购三型是核心模块"
+  },
+  {
+   "id": "should-trigger-02",
+   "type": "should_trigger",
+   "prompt": "侦查人员假扮买家引诱他买货再卖给自己，他本来根本没有贩毒的念头，这案子怎么处理？",
+   "expected_behavior": "激活本 skill，认定为犯意引诱：排除隐匿身份人员提供的毒品、毒资、渠道及相关证据，排除后达不到证明标准的应作无罪判决。",
+   "notes": "特情引诱四型是特色规则"
+  },
+  {
+   "id": "should-trigger-03",
+   "type": "should_trigger",
+   "prompt": "网上卖的'减肥药'里含有西布曲明和麻黄碱，卖的人说不知道是毒品，怎么定性？",
+   "expected_behavior": "激活本 skill，按麻精药品'用途×目的'双维判断：列管情况、有无合法用途、行为人对购买者用途的认识（概括认识'迷药类'仅贩毒；明知用于强奸等则涉共犯择一重）。",
+   "notes": "麻精药品双维定性"
+  },
+  {
+   "id": "should-not-trigger-01",
+   "type": "should_not_trigger",
+   "prompt": "这批冰毒明显掺了糖，数量上怎么算？够不够判死刑的数量标准？",
+   "expected_behavior": "不应激活本 skill，应激活 drug-quantity-death-review（数量认定与死刑适用）。",
+   "notes": "跨 skill 混淆诱饵：同书兄弟 skill"
+  },
+  {
+   "id": "should-trigger-04",
+   "type": "should_trigger",
+   "prompt": "他家里搜出的毒品都能算他贩卖的吗？",
+   "expected_behavior": "由本 skill 与 criminal-evidence-review 均可部分回应——预期主答为 drug-crime-review（住所车辆查获毒品推定贩卖+可反证），不判失。",
+   "notes": "交叉地带用例，放宽判定（2026-09-08 盲测后由 should_not_trigger 改标：expected 主答本就是 drug-crime-review）"
+  },
+  {
+   "id": "edge-01",
+   "type": "edge_case",
+   "prompt": "他吸毒，帮同村的毒友顺路带了两克海洛因，没收钱，路上被查了，怎么定性？",
+   "expected_behavior": "激活本 skill：不明知他人实施毒品犯罪牟利结构+未牟利→不属于贩卖；数量未达较大标准（2克）→不作为犯罪处理，作治安或吸毒情节处理。",
+   "notes": "边界：其他型代购+数量标准"
+  }
+ ],
+ "minimum_pass_rate": 0.8,
+ "notes": "should-not-trigger-01 为同书兄弟 skill（drug-quantity-death-review）场景诱饵。"
+}

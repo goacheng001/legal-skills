@@ -10,7 +10,7 @@ metadata:
     - criminal-case-os
 ---
 
-# criminal-case-os 刑事案件操作系统（总控）v3.3
+# criminal-case-os 刑事案件操作系统（总控）v3.4
 
 ## 工作定位
 
@@ -110,6 +110,8 @@ B. 委托类（委托人、当事人/家属委托）
 | `当事人身份证号` | 否 | 同上 | 起诉书 |
 | `当事人住址` | 否 | 同上 | 起诉书 |
 
+> **罪名类型路由扩展（v3.4）**：加载要件库之外，可按 `references/skill-map.md` 第四节就近选用罪名专项方法论 skill（限载铁律见该文件：与阶段方法论**合计 ≤3**，同争点罪名专项优先）。
+
 ### 双端独立运行与跨端断点接续
 
 1. 刑事案件OS可在当前调用端独立完整执行
@@ -149,6 +151,8 @@ B. 委托类（委托人、当事人/家属委托）
 | `criminal-non-prosecution` | 不起诉法律意见书（法定/存疑/酌定三类） | **是** |
 | `criminal-plea-bargain` | 认罪认罚协商策略意见书（含情景推演） | **是** |
 
+> **方法论增强（v3.4）**：本节点可按 `references/skill-map.md` 第一节选用审查起诉方法论 skill（合法性控制/疑罪从无/罪名界分等；限载铁律见该文件：合计 ≤3）。
+
 ### 三、一审阶段（法院环节）
 
 | 独立Skill | 职责 | 必须确认 |
@@ -158,6 +162,8 @@ B. 委托类（委托人、当事人/家属委托）
 | `criminal-defense-strategy` → `criminal-defense-statement` | 辩护方案 → 辩护词+庭审辩论口袋版+最后陈述辅导 | **是**（"可以出了"才生成） |
 | **`criminal-sentencing-defense`**（v3.3 新增） | 一审量刑辩护专项:量刑计算表(工作底稿)+ 量刑辩护意见(正式文书,可独立提交) | **是** |
 | `criminal-case-visualization` | 刑事可视化图表（全套8张图，任意阶段可用） | 否（生成后审阅） |
+
+> **方法论增强（v3.4）**：量刑辩护（`criminal-sentencing-defense`）可按 `references/skill-map.md` 第二节选用量刑方法论 skill（三步量刑/死刑过滤/自首核查等）；庭审质证（`criminal-trial-examination`）可按第三节选用庭审证据方法论 skill（证据审查/排非/庭审实质化等）。均受限载铁律约束（**合计 ≤3**）。
 
 **v3.3 受众划界（ADR 0005）**:
 - `criminal-plea-bargain`(认罪认罚协商)面向**检察院**,在审查起诉阶段、具结前运行
@@ -294,6 +300,9 @@ criminal-case-os/
 │   ├── 刑事法律依据索引.md            # 共享资源
 │   ├── 全流程风险速查.md              # 共享资源
 │   ├── 刑事归档清单.md                # v3.3 新增,case-archive 引用
+│   ├── defense-creativity.md          # v3.4 新增,辩点创意六路径底稿(khazix-creativity 跨界改写)
+│   ├── skill-map.md                   # v3.4 新增,cangjie 方法论路由表(限载铁律合计≤3)
+│   ├── cangjie-skills/                # v3.4 新增,刑事审判方法论 28 包(统编教材蒸馏,仅限内部使用)
 │   ├── crime-elements/               # v3.3 新增,罪名要件库（5 份）
 │   │   ├── 经济犯罪.md
 │   │   ├── 职务犯罪.md
@@ -346,6 +355,7 @@ criminal-case-os/
 | 量刑辩护方法论 | 本库 references/（量刑方法并入 criminal-sentencing-defense） | **private,仅限内部使用** | criminal-sentencing-defense 底稿 |
 | 上诉/申诉方法论 | criminal-defense-workflow v3.1.0 sub-skills/11/12 | **private,仅限内部使用** | criminal-appeal 底稿 |
 | 归档材料清单 | criminal-defense-workflow v3.1.0 sub-skills/13 | **private,仅限内部使用** | references/刑事归档清单.md |
+| 刑事审判方法论 28 包 | 本库 references/cangjie-skills/（全国法官培训统编教材2025《刑事审判实务》上下册仓颉蒸馏，darwin 盲测 98.2%） | **private,仅限内部使用** | 按 skill-map.md 限载选用（审查起诉/量刑/庭审/罪名专项） |
 
 > **不得对外发布**:含上述引入素材的所有 skill 与文件,排除在任何 `skill-repo-publish` 流程之外。
 
@@ -353,6 +363,7 @@ criminal-case-os/
 
 ## 版本历史
 
+- **v3.4 - 接入 cangjie 审判方法论库与辩点创意模块(2026-09-08)**:新增 `references/cangjie-skills/`(28 包,统编教材《刑事审判实务》上下册蒸馏,达尔文独立盲测 98.2%)与 `references/skill-map.md` 路由表(四类节点+辩护转化提示+限载铁律每节点合计≤3);新增 `references/defense-creativity.md` 辩点创意六路径(khazix-creativity 跨界改写);criminal-defense-strategy 新增可选工具 1.5 辩点发散(产物经 disposition_list 律师确认);归档清单新增难受点种子;调度表挂方法论增强钩子;新增 ADR 0006。
 - **v3.3.1 - 汪欣案回归验收修复(2026-07-22)**:回归 4/5 硬标准通过,唯一不通过项(正式文书 3 处内部痕迹泄漏)定位为规则措辞缺陷并修复——出厂闸门禁词清单扩充(技能/模块名、MCP、CLAUDE.md、内部底稿名等)、占位符禁注来源、落款日期取状态头开庭日;defense-statement「援引」改「采纳」;缓刑考验期法定最低修正为《刑法》73 条通用规则(剔除个案硬编码);新增两条质量规则(量刑测算算术自洽、不利事实入正式文书须律师确认)。验收记录:`刑事OS/对比测试/验收-v3.3.md`。
 - **v3.3 - 融合 criminal-defense-workflow(v3.1.0,private)**：新建 `criminal-sentencing-defense` 一审量刑辩护专项与 `criminal-appeal` 救济阶段独立 skill;引入 8 份知识库(罪名要件 5 + 跨专业 3)+ 归档清单,头部标注来源;redlines 新增三条铁律(案内时间锚定/正式文书出厂闸门/量刑主张不损当事人利益);handoff 加「辩点处置清单」必填;刑事文书格式规范加两层目录与 Word 版;评估加新维度;菜单/调度/依赖/状态头同步;新增 ADR 0004 与 ADR 0005。
 - v3.2 - **接入卷宗拆解前置**：准备组新增 criminal-dossier-processor（外部引入 2026-05-29），作为阅卷前可选物料准备；交互菜单新增「0.5 卷宗拆解」；workflow.md 同步登记为可选前置；律师复核索引为强制确认点。

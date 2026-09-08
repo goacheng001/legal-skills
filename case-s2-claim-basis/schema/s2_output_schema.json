@@ -1,6 +1,6 @@
 {
   "schema_name": "S2请求权基础输出Schema",
-  "schema_version": "1.0.0",
+  "schema_version": "1.1.0",
   "schema_purpose": "定义S2请求权基础确定的输出结构，包含法条性质鉴别",
   "step_id": "S2",
   "step_name": "确定权利请求基础规范",
@@ -79,12 +79,18 @@
               "法条性质": {
                 "type": "string",
                 "description": "法条性质（完全性法条/倡导性法条）",
-                "enum": ["完全性法条", "倡导性法条"]
+                "enum": [
+                  "完全性法条",
+                  "倡导性法条"
+                ]
               },
               "statute_nature": {
                 "type": "string",
                 "description": "法条性质英文字段（供S4读取）",
-                "enum": ["完全性法条", "倡导性法条"]
+                "enum": [
+                  "完全性法条",
+                  "倡导性法条"
+                ]
               },
               "constitutive_elements": {
                 "type": "array",
@@ -158,6 +164,32 @@
           }
         }
       }
+    },
+    "domain_card_hit": {
+      "type": "boolean",
+      "description": "领域知识卡片是否命中（案由在 domain-map.json 映射内）",
+      "required": false,
+      "default": false
+    },
+    "domain_insights": {
+      "type": "array",
+      "description": "领域卡片审查要点（命中时必填；解释性知识，不改变 legal_articles 法条口径）",
+      "required": false,
+      "items": {
+        "type": "object",
+        "properties": {
+          "card_slug": {
+            "type": "string"
+          },
+          "insight": {
+            "type": "string"
+          },
+          "applied_at": {
+            "type": "string",
+            "description": "应用位置（如 定性排除/利率上限计算）"
+          }
+        }
+      }
     }
   },
   "statute_nature_criteria": {
@@ -190,6 +222,7 @@
     "本Schema定义了S2请求权基础确定的输出结构",
     "法条性质鉴别依据：nine_step_checklist.json 第16、17项",
     "statute_nature字段供S4读取，确保S4只使用完全性法条",
-    "输出采用JSON frontmatter + Markdown正文格式"
+    "输出采用JSON frontmatter + Markdown正文格式",
+    "2026-09-08 v1.1: 融合 domain-map 增补 domain_card_hit/domain_insights 可选字段"
   ]
 }

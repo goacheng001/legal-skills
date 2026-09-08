@@ -1,0 +1,52 @@
+{
+  "skill": "loan-relation-characterization",
+  "version": "0.1.0",
+  "source_book": "《民商事审判实务（第3册）》 — 最高人民法院组织编写",
+  "darwin_compatible": true,
+  "test_cases": [
+    {
+      "id": "should-trigger-01",
+      "type": "should_trigger",
+      "prompt": "我朋友跟我签的是'投资入股协议'，但写死每年固定返 15% 不管亏盈，现在本金也不给了，我能按民间借贷起诉吗？",
+      "expected_behavior": "激活本 skill：保底条款的合伙/投资实质为借贷，用排除法定性为民间借贷",
+      "notes": "正面场景：名为投资实为借贷"
+    },
+    {
+      "id": "should-trigger-02",
+      "type": "should_trigger",
+      "prompt": "融资租赁合同里设备的清单都没有，设备也一直在承租人厂里没交给租赁公司，这算融资租赁还是借贷？",
+      "expected_behavior": "激活本 skill：融资+融物双重属性缺一不可，租赁物不特定/所有权未转移→名为融资租赁实为借贷",
+      "notes": "正面场景：售后回租定性（书内裁判要旨同型）"
+    },
+    {
+      "id": "should-trigger-03",
+      "type": "should_trigger",
+      "prompt": "谈恋爱两年给女朋友转了四十多万，有笔转账备注写了'借你周转'，分手后能要回来吗？",
+      "expected_behavior": "激活本 skill：情侣转账原则上属情谊行为，但备注明确出借意思的该笔构成借贷，其余转账按情谊行为处理，逐笔区分",
+      "notes": "正面场景：情侣转账区分"
+    },
+    {
+      "id": "should-not-trigger-01",
+      "type": "should_not_trigger",
+      "prompt": "他借我五十万打了借条，但钱是现金给的，现在他不认账说没收到钱。",
+      "expected_behavior": "不应激活本 skill：定性无争议（借条+借贷关系明确），应激活 loan-delivery-proof-check（交付审查）",
+      "notes": "跨 skill 混淆诱饵：同为借贷纠纷，但属交付事实问题"
+    },
+    {
+      "id": "should-not-trigger-02",
+      "type": "should_not_trigger",
+      "prompt": "借款人涉嫌非法吸收公众存款被抓了，我的借款合同还有效吗？担保人还要赔吗？",
+      "expected_behavior": "不应激活本 skill，应激活 loan-criminal-civil-split（刑民交叉程序与效力评价）",
+      "notes": "跨 skill 混淆诱饵：定性已明，属涉罪效力与担保问题"
+    },
+    {
+      "id": "edge-01",
+      "type": "edge_case",
+      "prompt": "父母出钱给儿子婚房付了首付，没写借条也没说借还是赠，离婚时儿媳说那是赠与，怎么认定？",
+      "expected_behavior": "激活本 skill 并给出边界分析：无明确出借表示时按婚姻家庭编规则处理（婚前出资原则上视为对自己子女的赠与，婚后按约定或共同财产规则），仅在父母明确表示出借时认定为借贷；书内规则与婚姻家庭规则衔接处应如实说明",
+      "notes": "边界：父母出资的意思表示不明"
+    }
+  ],
+  "minimum_pass_rate": 0.8,
+  "notes": "含 2 条兄弟 skill 诱饵（loan-delivery-proof-check、loan-criminal-civil-split）。"
+}

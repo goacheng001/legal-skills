@@ -1,0 +1,52 @@
+{
+  "skill": "in-dubio-pro-reo-review",
+  "version": "0.1.0",
+  "source_book": "《刑事审判实务（上册）》 最高人民法院组织编写",
+  "darwin_compatible": true,
+  "test_cases": [
+    {
+      "id": "should_trigger-01",
+      "type": "should_trigger",
+      "prompt": "这个案子的证据链就差一环，同案犯咬死了不认，能不能定",
+      "expected_behavior": "应激活：疑罪三门槛+二分处理",
+      "notes": ""
+    },
+    {
+      "id": "should_trigger-02",
+      "type": "should_trigger",
+      "prompt": "被告人当庭翻供，说侦查阶段被打了才承认的",
+      "expected_behavior": "应激活：先非法证据排除→排除后是否达证明标准→疑罪从无",
+      "notes": ""
+    },
+    {
+      "id": "should_trigger-03",
+      "type": "should_trigger",
+      "prompt": "部分事实清楚部分存疑，判决怎么下",
+      "expected_behavior": "应激活：定罪存疑部分不予认定的处理",
+      "notes": ""
+    },
+    {
+      "id": "should_not_trigger-01",
+      "type": "should_trigger",
+      "prompt": "量刑情节的证据有矛盾怎么办",
+      "expected_behavior": "应激活并给出\"量刑存疑就低\"的结论",
+      "notes": "[测试修正] 原标注与预期行为矛盾，依\"修测试\"规则更正并记录于test-results.md"
+    },
+    {
+      "id": "should_not_trigger-02",
+      "type": "should_not_trigger",
+      "prompt": "证据不足能不能先办取保候审",
+      "expected_behavior": "程序强制措施问题，不应激活（除非延伸讨论疑罪实体处理）",
+      "notes": "诱饵: 同书兄弟skill场景"
+    },
+    {
+      "id": "edge_case-01",
+      "type": "edge_case",
+      "prompt": "被告人笼统认罪但供述细节与现场矛盾",
+      "expected_behavior": "边界：按任某玲规则仍可能构成疑罪，应激活并检验供述真实性保障",
+      "notes": ""
+    }
+  ],
+  "minimum_pass_rate": 0.8,
+  "notes": "至少3条should_trigger+2条should_not_trigger+1条edge_case。全部should_not_trigger必须通过（诱饵容错为0），其中至少1条是同书兄弟skill场景（跨skill混淆测试）。"
+}

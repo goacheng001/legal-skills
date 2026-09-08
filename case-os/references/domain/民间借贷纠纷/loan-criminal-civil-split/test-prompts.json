@@ -1,0 +1,52 @@
+{
+  "skill": "loan-criminal-civil-split",
+  "version": "0.1.0",
+  "source_book": "《民商事审判实务（第3册）》 — 最高人民法院组织编写",
+  "darwin_compatible": true,
+  "test_cases": [
+    {
+      "id": "should-trigger-01",
+      "type": "should_trigger",
+      "prompt": "借款人因为伪造资料骗我们放贷，已经被以合同诈骗罪立案了，我还能在法院起诉他还钱吗？合同还有效吗？",
+      "expected_behavior": "激活本 skill：三步框架——程序上非同一事实可继续审理；效力上构成合同诈骗属可撤销，受欺诈方可选择不撤销按有效主张违约责任",
+      "notes": "正面场景：合同诈骗+民事求偿"
+    },
+    {
+      "id": "should-trigger-02",
+      "type": "should_trigger",
+      "prompt": "平台老板构成非法吸收公众存款罪判了，我投进去的单笔借款合同算无效吗？担保公司是不是不用赔了？",
+      "expected_behavior": "激活本 skill：非吸不必然导致借款合同无效，按效力性强制性规定个案判断；担保不必然无效，担保人按过错承担相应赔偿责任",
+      "notes": "正面场景：非吸+担保责任"
+    },
+    {
+      "id": "should-trigger-03",
+      "type": "should_trigger",
+      "prompt": "出借人套取银行承兑汇票放贷被查了，主合同无效后，那个作保的公司要承担全部还款责任吗？",
+      "expected_behavior": "激活本 skill：主合同无效→担保合同无效，但担保人明知仍担保有过错的，对不能清偿部分按比例（如1/3）承担赔偿责任",
+      "notes": "正面场景：书内承兑汇票案同型"
+    },
+    {
+      "id": "should-not-trigger-01",
+      "type": "should_not_trigger",
+      "prompt": "原告拿假借条起诉我朋友，想把他名下房子判走，这是不是犯罪？",
+      "expected_behavior": "不应激活本 skill，应激活 loan-sham-litigation-screen（诉讼行为涉罪=虚假诉讼，而非借贷行为涉罪）",
+      "notes": "跨 skill 混淆诱饵：假诉讼涉罪"
+    },
+    {
+      "id": "should-not-trigger-02",
+      "type": "should_not_trigger",
+      "prompt": "他借钱说做生意，实际拿去赌博输光了，我知道后能不能不还利息？",
+      "expected_behavior": "不应激活本 skill 的主流程：借贷行为本身不涉罪，仅用途违法且属事后知情，不触发刑民交叉分流；按合同效力一般规则处理",
+      "notes": "诱饵：用途违法但借贷行为不构成犯罪"
+    },
+    {
+      "id": "edge-01",
+      "type": "edge_case",
+      "prompt": "法院说我的借贷案子跟刑事案件是同一事实，裁定驳回起诉移送公安，我该怎么办？",
+      "expected_behavior": "激活本 skill 并给出程序判断：同一事实竞合的移送符合分流规则；但应审查是否属于'借贷构成犯罪时担保纠纷应受理'等可以并行的部分，分别处理",
+      "notes": "边界：移送后的部分受理空间"
+    }
+  ],
+  "minimum_pass_rate": 0.8,
+  "notes": "含 2 条诱饵：兄弟 skill loan-sham-litigation-screen 场景（跨 skill 混淆）+ 用途违法场景。"
+}

@@ -1,0 +1,13 @@
+{
+  "slug": "ms2-contract-nature-substance",
+  "source_book": "05-minshangshi-2",
+  "source_registry": "yanruyu registry candidate (cangjie-05-minshangshi-2-v2-20260908)",
+  "blind_test": {
+    "hard_pass": "74/75",
+    "decoy": "32/32",
+    "mode": "darwin_blind_v1"
+  },
+  "sha256": "483b2eaa381197510029090a8930324d38ebe98679b988acb90f27532b0fd369",
+  "copied_at": "2026-09-08",
+  "note": "知识卡片：解释性知识，冲突时以claim-basis-table与现行法优先"
+}

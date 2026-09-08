@@ -1,0 +1,52 @@
+{
+  "skill": "surrender-merit-verification",
+  "version": "0.1.0",
+  "source_book": "《刑事审判实务（上册）》 最高人民法院组织编写",
+  "darwin_compatible": true,
+  "test_cases": [
+    {
+      "id": "should_trigger-01",
+      "type": "should_trigger",
+      "prompt": "他是在派出所被盘问时主动交代的，算自首吗",
+      "expected_behavior": "应激活：形迹可疑vs犯罪嫌疑检验",
+      "notes": ""
+    },
+    {
+      "id": "should_trigger-02",
+      "type": "should_trigger",
+      "prompt": "他妈妈把他扭送到公安局的，算自动投案吗",
+      "expected_behavior": "应激活：送亲归案要件",
+      "notes": ""
+    },
+    {
+      "id": "should_trigger-03",
+      "type": "should_trigger",
+      "prompt": "他举报了同案犯藏的地方，公安去没抓到，算立功吗",
+      "expected_behavior": "应激活：立功实效性因果检验",
+      "notes": ""
+    },
+    {
+      "id": "should_not_trigger-01",
+      "type": "should_not_trigger",
+      "prompt": "认罪认罚具结后还能反悔吗",
+      "expected_behavior": "程序制度问题，不激活本skill",
+      "notes": "诱饵: 同书兄弟skill场景"
+    },
+    {
+      "id": "should_not_trigger-02",
+      "type": "should_not_trigger",
+      "prompt": "自首了能从轻百分之多少",
+      "expected_behavior": "幅度问题→转 three-step-sentencing；情节成立判断属本skill，此问为幅度",
+      "notes": "跨skill诱饵：成立之后的幅度"
+    },
+    {
+      "id": "edge_case-01",
+      "type": "edge_case",
+      "prompt": "打120后以为会有人报警，在现场等并被带走",
+      "expected_behavior": "边界：现场待捕型三要件，激活",
+      "notes": ""
+    }
+  ],
+  "minimum_pass_rate": 0.8,
+  "notes": "至少3条should_trigger+2条should_not_trigger+1条edge_case。全部should_not_trigger必须通过（诱饵容错为0），其中至少1条是同书兄弟skill场景（跨skill混淆测试）。"
+}

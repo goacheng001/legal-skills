@@ -1,0 +1,52 @@
+{
+  "skill": "speedy-trial-gatekeeping",
+  "version": "0.1.0",
+  "source_book": "刑事审判实务（下册） — 最高人民法院组织编写",
+  "darwin_compatible": true,
+  "test_cases": [
+    {
+      "id": "should-trigger-01",
+      "type": "should_trigger",
+      "prompt": "危险驾驶案，认罪认罚，能不能走速裁当天审完？",
+      "expected_behavior": "激活本 skill，核对三条件（基层管辖+三年以下+事实清楚证据确实充分+认罪认罚并同意）与七类排除，给出可以适用及审理要点（当庭宣判、10日审限）。",
+      "notes": "入口闸门是核心模块"
+    },
+    {
+      "id": "should-trigger-02",
+      "type": "should_trigger",
+      "prompt": "速裁开庭时被告人突然说案子不是他干的，怎么办？",
+      "expected_behavior": "激活本 skill：被告人否认指控犯罪事实→转普通程序或简易程序重新审理。",
+      "notes": "程序转换是出口闸门"
+    },
+    {
+      "id": "should-trigger-03",
+      "type": "should_trigger",
+      "prompt": "速裁案件上诉后二审发回重审，不再按认罪认罚从宽判，能比原来判得重吗？",
+      "expected_behavior": "激活本 skill：不得加重——取消从宽后重判仍不得比原判更重（上诉不加刑）。",
+      "notes": "速裁与上诉不加刑的交叉规则"
+    },
+    {
+      "id": "should-not-trigger-01",
+      "type": "should_not_trigger",
+      "prompt": "认罪认罚的话量刑一般能减多少？",
+      "expected_behavior": "不应激活本 skill，应激活 plea-lenient-review（从宽幅度问题）。",
+      "notes": "跨 skill 混淆诱饵：同书兄弟 skill"
+    },
+    {
+      "id": "should-not-trigger-02",
+      "type": "should_not_trigger",
+      "prompt": "速裁案件的量刑建议明显偏轻，法院能不能直接判重一点？",
+      "expected_behavior": "不应由本 skill 主答（这是量刑建议实体处理），应激活 plea-lenient-review；本 skill 只提示速裁调整后被告人同意可继续速裁。",
+      "notes": "实体/程序分界诱饵"
+    },
+    {
+      "id": "edge-01",
+      "type": "edge_case",
+      "prompt": "被告人是聋哑人，本人强烈要求快审快判，能用速裁吗？",
+      "expected_behavior": "激活本 skill 并给出否定结论：盲聋哑人属法定排除情形，不因本人要求改变；可转简易/普通程序，认罪认罚的实体从宽不受影响。",
+      "notes": "边界：排除情形与当事人意愿冲突"
+    }
+  ],
+  "minimum_pass_rate": 0.8,
+  "notes": "should-not-trigger-01 为同书兄弟 skill（plea-lenient-review）场景诱饵。"
+}

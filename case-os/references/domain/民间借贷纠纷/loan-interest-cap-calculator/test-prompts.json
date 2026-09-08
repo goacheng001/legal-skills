@@ -1,0 +1,52 @@
+{
+  "skill": "loan-interest-cap-calculator",
+  "version": "0.1.0",
+  "source_book": "《民商事审判实务（第3册）》 — 最高人民法院组织编写",
+  "darwin_compatible": true,
+  "test_cases": [
+    {
+      "id": "should-trigger-01",
+      "type": "should_trigger",
+      "prompt": "借款100万，放款当天先转回来2万块'当月利息'，本金按多少算？利息怎么算才受保护？",
+      "expected_behavior": "激活本 skill：放款当日支付利息认定为砍头息，从本金扣除按98万计息；上限按合同成立时LPR四倍",
+      "notes": "正面场景：砍头息（书内张某案同型）"
+    },
+    {
+      "id": "should-trigger-02",
+      "type": "should_trigger",
+      "prompt": "借条约定月息一分五，另外每月还交3%的'担保费'给出借人指定的担保公司，这些费用算不算利息？",
+      "expected_behavior": "激活本 skill：关联方收取的担保费实质为融资对价，属'其他费用'与利息合并受四倍LPR上限约束；律师费保全费除外",
+      "notes": "正面场景：费用归并防拆分"
+    },
+    {
+      "id": "should-trigger-03",
+      "prompt": "借条换了好几次，利息滚进本金，现在本息加起来翻了三倍，他全都要，法律上最多让他要多少？",
+      "type": "should_trigger",
+      "expected_behavior": "激活本 skill：复利规则——每期换条以前期利率不超四倍LPR为前提，且全期本息之和不得超过最初本金按四倍LPR计算的全期利息",
+      "notes": "正面场景：复利封顶"
+    },
+    {
+      "id": "should-not-trigger-01",
+      "type": "should_not_trigger",
+      "prompt": "我的房贷利率能不能跟银行商量降一点？",
+      "expected_behavior": "不应激活本 skill：金融机构住房贷款不适用民间借贷上限规则",
+      "notes": "诱饵：金融借贷场景"
+    },
+    {
+      "id": "should-not-trigger-02",
+      "type": "should_not_trigger",
+      "prompt": "他说我借条上写的金额跟实际拿到的不一样，钱没给够，这怎么查？",
+      "expected_behavior": "不应激活本 skill，应激活 loan-delivery-proof-check（交付审查与虚记本金查证）",
+      "notes": "跨 skill 混淆诱饵：本金查证属交付审查层，本 skill 在其实际本金基础上做利率计算"
+    },
+    {
+      "id": "edge-01",
+      "type": "edge_case",
+      "prompt": "合同2020年8月19日签的，纠纷现在才起诉，利率上限按老标准还是四倍LPR？",
+      "expected_behavior": "激活本 skill 并给出分段计算：2020年8月20日前后分段适用不同上限标准，跨期案件分段计算",
+      "notes": "边界：分段规则"
+    }
+  ],
+  "minimum_pass_rate": 0.8,
+  "notes": "含 2 条诱饵：金融借贷（领域外）+ 兄弟 skill loan-delivery-proof-check 场景（跨 skill 混淆）。"
+}

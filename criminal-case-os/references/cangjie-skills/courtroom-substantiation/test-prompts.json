@@ -1,0 +1,52 @@
+{
+  "skill": "courtroom-substantiation",
+  "version": "0.1.0",
+  "source_book": "刑事审判实务（下册） — 最高人民法院组织编写",
+  "darwin_compatible": true,
+  "test_cases": [
+    {
+      "id": "should-trigger-01",
+      "type": "should_trigger",
+      "prompt": "涉黑案三十多个被告人、卷宗一百多册，庭审方案里要不要安排庭前会议？",
+      "expected_behavior": "激活本 skill，按四种启动情形判断（证据多案情复杂可开），并给出庭前会议五项内容与'不质证不辩论'的边界。",
+      "notes": "庭前会议启动是核心模块"
+    },
+    {
+      "id": "should-trigger-02",
+      "type": "should_trigger",
+      "prompt": "被告人是死刑上诉案件，二审可以书面审理吗？",
+      "expected_behavior": "本 prompt 涉及二审开庭——若激活应给出'被告人被判死刑的上诉案件应当开庭、死缓一律开庭'；该规则在本 skill 量刑程序与庭审模块有承接，亦可由 criminal-procedure-review 回答，判定以是否给出开庭要求为准。",
+      "notes": "与 criminal-procedure-review 有交叉，预期两 skill 均可响应，不作硬性判失"
+    },
+    {
+      "id": "should-trigger-03",
+      "type": "should_trigger",
+      "prompt": "被告人作无罪辩护，还能让他参加量刑调查吗？会不会自相矛盾？",
+      "expected_behavior": "激活本 skill：普通程序不认罪案件定罪量刑两段辩论，参加量刑问题的调查不影响作无罪辩解或者辩护。",
+      "notes": "量刑程序模块的标志性规则"
+    },
+    {
+      "id": "should-not-trigger-01",
+      "type": "should_not_trigger",
+      "prompt": "检察院的量刑建议比我们算的轻了将近一半，法院必须采纳吗？",
+      "expected_behavior": "不应激活本 skill，应激活 plea-lenient-review（量刑建议审查采纳与调整——若系认罪认罚案件）或按非认罪认罚告知程序处理；核心是量刑建议实体审查而非庭审编排。",
+      "notes": "跨 skill 混淆诱饵：同书兄弟 skill"
+    },
+    {
+      "id": "should-not-trigger-02",
+      "type": "should_not_trigger",
+      "prompt": "申请排除非法证据后，庭前会议要怎么审查取证合法性？",
+      "expected_behavior": "不应由本 skill 主答，应激活 illegal-evidence-exclusion（排非审查流程）。",
+      "notes": "跨 skill 混淆诱饵：庭前会议的排非功能归属"
+    },
+    {
+      "id": "edge-01",
+      "type": "edge_case",
+      "prompt": "庭前会议中控辩双方都说没异议的证据，正式开庭还要一证一质吗？",
+      "expected_behavior": "激活本 skill：无争议的非关键证据可以简化质证（说明证据名称和拟证明事项+对方意见），简化不是免除；关键证据仍应单独举证质证。",
+      "notes": "边界：庭前合意与庭审质证的关系"
+    }
+  ],
+  "minimum_pass_rate": 0.8,
+  "notes": "should-trigger-02 为交叉地带用例，判定标准放宽为'任一相关 skill 正确回应'；should-not-trigger-01/02 为兄弟 skill 诱饵。"
+}

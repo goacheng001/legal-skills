@@ -1,0 +1,52 @@
+{
+  "skill": "criminal-procedure-review",
+  "version": "0.1.0",
+  "source_book": "刑事审判实务（下册） — 最高人民法院组织编写",
+  "darwin_compatible": true,
+  "test_cases": [
+    {
+      "id": "should-trigger-01",
+      "type": "should_trigger",
+      "prompt": "只有被告人上诉，二审把危险驾驶改判成以危险方法危害公共安全，刑期从拘役提到三年，这样行吗？",
+      "expected_behavior": "激活本 skill，适用上诉不加刑：罪名不当可以改变但不得加重刑罚或对刑罚执行产生不利影响；实刑化+刑期提高均为实质不利改判。",
+      "notes": "上诉不加刑是核心模块"
+    },
+    {
+      "id": "should-trigger-02",
+      "type": "should_trigger",
+      "prompt": "交通肇事案的被害人家属在附带民事诉讼里要一百万死亡赔偿金，判不判？",
+      "expected_behavior": "激活本 skill，适用'两金'规则：判决原则上不将死亡赔偿金纳入判赔范围（限于医疗护理交通误工丧葬等实际物质损失），但调解、和解的赔偿范围数额不受限。",
+      "notes": "附带民诉判赔规则"
+    },
+    {
+      "id": "should-trigger-03",
+      "type": "should_trigger",
+      "prompt": "判决生效了才发现漏了一批查扣的手机没处理，怎么办？",
+      "expected_behavior": "激活本 skill，适用漏判处理规则：二审期间发现的可发回一并处理（不违反上诉不加刑）；判决生效后发现的由原审法院依法对涉案财物另行作出处理。",
+      "notes": "涉财漏判规则"
+    },
+    {
+      "id": "should-not-trigger-01",
+      "type": "should_not_trigger",
+      "prompt": "他收的不是现金而是公司干股，这算受贿吗？数额怎么算？",
+      "expected_behavior": "不应激活本 skill，应激活 duty-crime-review（新型受贿认定）。",
+      "notes": "跨 skill 混淆诱饵：同书兄弟 skill"
+    },
+    {
+      "id": "should-not-trigger-02",
+      "type": "should_not_trigger",
+      "prompt": "被告人申请排除刑讯逼供的供述，合议庭怎么组织调查？",
+      "expected_behavior": "不应激活本 skill，应激活 illegal-evidence-exclusion。",
+      "notes": "跨 skill 混淆诱饵：排非专项"
+    },
+    {
+      "id": "edge-01",
+      "type": "edge_case",
+      "prompt": "一审没判没收，被告人上诉、检察院没抗诉，二审直接改判加没收财产行不行？",
+      "expected_behavior": "激活本 skill：原判判处的刑罚不当、应当适用附加刑而没有适用的，二审不得直接加重刑罚、适用附加刑——不得直接加判没收财产；确属畸轻须改判的经审判监督程序。",
+      "notes": "边界：401条第7项漏附加刑情形"
+    }
+  ],
+  "minimum_pass_rate": 0.8,
+  "notes": "should-not-trigger-01（duty-crime-review）、should-not-trigger-02（illegal-evidence-exclusion）为同书兄弟 skill 诱饵。"
+}

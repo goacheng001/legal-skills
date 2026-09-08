@@ -1,0 +1,52 @@
+{
+  "skill": "loan-sham-litigation-screen",
+  "version": "0.1.0",
+  "source_book": "《民商事审判实务（第3册）》 — 最高人民法院组织编写",
+  "darwin_compatible": true,
+  "test_cases": [
+    {
+      "id": "should-trigger-01",
+      "type": "should_trigger",
+      "prompt": "夫妻离婚诉讼期间，配偶的弟弟突然拿着一张200万借条起诉他，被告全盘认账，我从哪儿看出来是不是假案子？",
+      "expected_behavior": "激活本 skill：对照虚假诉讼特征信号（关联关系+无对抗+大额借款+时间节点异常）启动筛查，按构成要件核查",
+      "notes": "正面场景：关联方无对抗借款"
+    },
+    {
+      "id": "should-trigger-02",
+      "type": "should_trigger",
+      "prompt": "查实这个借贷案子是原告捏造的，判决驳回他的起诉请求就行了吧？",
+      "expected_behavior": "激活本 skill：查处阶段必须'驳回+罚款拘留'并重，只驳回不处罚不正确；涉罪的移送线索",
+      "notes": "正面场景：查处力度（书内明确反例）"
+    },
+    {
+      "id": "should-trigger-03",
+      "type": "should_trigger",
+      "prompt": "我前公司老板伪造借条打赢了官司参与分配公司财产，现在执行完了才发现，我还能翻案吗？",
+      "expected_behavior": "激活本 skill：救济段——受害人可申请再审纠错，另行请求虚假诉讼损害赔偿",
+      "notes": "正面场景：受害人救济"
+    },
+    {
+      "id": "should-not-trigger-01",
+      "type": "should_not_trigger",
+      "prompt": "对方拿借条起诉我，我说钱是现金收到的但早就还清了，他拿不出还款证据怎么办？",
+      "expected_behavior": "不应激活本 skill：属正常抗辩与举证（清偿事实由被告举证），非捏造诉讼；按 loan-delivery-proof-check 类证明规则处理",
+      "notes": "跨 skill 混淆诱饵：正常举证对抗≠虚假诉讼"
+    },
+    {
+      "id": "should-not-trigger-02",
+      "type": "should_not_trigger",
+      "prompt": "借款人被合同诈骗罪立案了，我还能起诉他还钱吗？",
+      "expected_behavior": "不应激活本 skill，应激活 loan-criminal-civil-split（刑民交叉程序分流）",
+      "notes": "跨 skill 混淆诱饵：真借贷涉罪 vs 假诉讼涉罪"
+    },
+    {
+      "id": "edge-01",
+      "type": "edge_case",
+      "prompt": "双方签了阴阳合同，原告拿着高价的'白合同'起诉要按白合同金额处理全部债权债务关系。",
+      "expected_behavior": "激活本 skill 并给出边界判断：依'白合同'起诉但请求处理包括真实关系在内的全部法律关系的，属通谋虚伪表示问题，不宜认定为虚假诉讼（书内明确规则）",
+      "notes": "边界：白合同起诉的排除规则"
+    }
+  ],
+  "minimum_pass_rate": 0.8,
+  "notes": "含 2 条兄弟 skill 诱饵（loan-delivery-proof-check 类证明场景、loan-criminal-civil-split）。"
+}

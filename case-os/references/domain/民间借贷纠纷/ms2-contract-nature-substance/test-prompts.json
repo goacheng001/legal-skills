@@ -1,0 +1,52 @@
+{
+  "skill": "ms2-contract-nature-substance",
+  "version": "0.1.0",
+  "source_book": "《民商事审判实务（第2册）：担保、合同》最高人民法院组织编写",
+  "darwin_compatible": true,
+  "test_cases": [
+    {
+      "id": "should-trigger-01",
+      "type": "should_trigger",
+      "prompt": "这几家企业倒手同一批钢材，同日签约、价格不同、货没动过，是什么关系？",
+      "expected_behavior": "应激活本skill：循环贸易识别——无真实交付+闭环→名为买卖实为借贷",
+      "notes": "正面：循环贸易"
+    },
+    {
+      "id": "should-trigger-02",
+      "type": "should_trigger",
+      "prompt": "借款放款当天就扣了一笔'财务顾问费'，本金按多少算？",
+      "expected_behavior": "应激活本skill：砍头息实质判断——利息以实际占有资金为前提，变相费用冲抵本金",
+      "notes": "正面：砍头息"
+    },
+    {
+      "id": "should-trigger-03",
+      "type": "should_trigger",
+      "prompt": "签了认购书交了定金，对方反悔不签正式合同，我能要求法院判他必须签约吗？",
+      "expected_behavior": "应激活本skill：预约不得强制缔约，赔偿在信赖利益与履行利益之间酌定",
+      "notes": "正面：预约本约"
+    },
+    {
+      "id": "should-not-trigger-04",
+      "type": "should_not_trigger",
+      "prompt": "设备'过户+到期回购'的安排算担保吗？有什么效力？",
+      "expected_behavior": "不应激活：承认担保功能的安排→ms2-atypical-security-identify（让与担保）",
+      "notes": "兄弟skill诱饵"
+    },
+    {
+      "id": "should-not-trigger-05",
+      "type": "should_not_trigger",
+      "prompt": "违反部门规章的合同是否无效？",
+      "expected_behavior": "不应激活：效力评价→ms2-contract-validity-layers",
+      "notes": "兄弟skill诱饵"
+    },
+    {
+      "id": "edge-06",
+      "type": "edge",
+      "prompt": "过桥方在闭环贸易里提供了通道，出资方损失他要赔吗？",
+      "expected_behavior": "应激活：通道方/过桥方责任——不作为借款人，按原因力+过错承担补充赔偿",
+      "notes": "边界：责任分配"
+    }
+  ],
+  "minimum_pass_rate": 0.8,
+  "notes": "至少3条should_trigger+2条should_not_trigger（含≥1条同书兄弟skill场景）+1条edge_case。"
+}

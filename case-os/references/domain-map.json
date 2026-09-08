@@ -1,0 +1,63 @@
+{
+  "version": "0.1.0",
+  "updated": "2026-09-08",
+  "说明": "案由→领域知识卡片映射（民商事教材蒸馏融合 v0.1 借贷原型）。S2命中案由后按本表加载卡片；卡片是解释性知识，与claim-basis-table/现行法冲突时后者优先；未命中记 domain_card_hit:false 供种子循环扩域。",
+  "加载规则": {
+    "触发点": [
+      "S2请求权基础",
+      "S3抗辩",
+      "S4要件拆解",
+      "S6争点矩阵",
+      "S7举证责任"
+    ],
+    "每加载点上限": 3,
+    "优先级": "现行法 > claim-basis-table > 领域卡片",
+    "卡片路径模板": "references/domain/<案由>/<slug>/SKILL.md（读I段骨架+E段步骤，R段按需）",
+    "未命中登记": "domain_card_hit:false + 种子记录（案由名+缺失能力一句话）"
+  },
+  "案由映射": {
+    "民间借贷纠纷": {
+      "别名": [
+        "民间借贷合同纠纷",
+        "民间借贷"
+      ],
+      "加载点": {
+        "S2": [
+          "loan-relation-characterization",
+          "ms2-contract-nature-substance",
+          "loan-interest-cap-calculator"
+        ],
+        "S3": [
+          "loan-delivery-proof-check",
+          "mortgage-linked-contract-exit"
+        ],
+        "S4": [
+          "loan-interest-cap-calculator"
+        ],
+        "S6": [
+          "loan-sham-litigation-screen",
+          "loan-criminal-civil-split"
+        ],
+        "S7": [
+          "loan-delivery-proof-check"
+        ]
+      },
+      "关联抗辩库": "data/defenses/民间借贷纠纷.json",
+      "卡片数": 7,
+      "来源册": [
+        "05-minshangshi-2",
+        "06-minshangshi-3"
+      ]
+    }
+  },
+  "扩展队列": [
+    "买卖合同纠纷",
+    "房屋租赁合同纠纷",
+    "建设工程合同纠纷",
+    "劳动争议",
+    "离婚纠纷",
+    "保险合同纠纷",
+    "票据纠纷",
+    "股权转让纠纷"
+  ]
+}

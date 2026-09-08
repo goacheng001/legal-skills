@@ -1,0 +1,19 @@
+{
+  "slug": "loan-interest-cap-calculator",
+  "source_book": "06-minshangshi-3",
+  "source_registry": "yanruyu registry candidate (cangjie-06-minshangshi-3-v2-20260908)",
+  "blind_test": {
+    "hard_pass": "83/83",
+    "decoy": "30/30",
+    "mode": "darwin_blind_v1"
+  },
+  "sha256": "0d141c2d0bb7d46fc2cdaf7b29794205621ef667063884c1a66d4294e5a7602a",
+  "copied_at": "2026-09-08",
+  "note": "知识卡片：解释性知识，冲突时以claim-basis-table与现行法优先",
+  "diverged_from_source": {
+    "date": "2026-09-08",
+    "reason": "darwin dim8 实测发现抵充期间口径缺口（漏计交付起首期前利息），E段第5步补抵充口径",
+    "source_still_at": "books/06-minshangshi-3/loan-interest-cap-calculator（未改，registry sha256 对应源件）",
+    "pending_merge": "sublate 晋升时并入此修复"
+  }
+}

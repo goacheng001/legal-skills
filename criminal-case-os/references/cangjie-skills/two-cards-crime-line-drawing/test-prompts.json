@@ -1,0 +1,52 @@
+{
+  "skill": "two-cards-crime-line-drawing",
+  "version": "0.1.0",
+  "source_book": "刑事审判实务（下册） — 最高人民法院组织编写",
+  "darwin_compatible": true,
+  "test_cases": [
+    {
+      "id": "should-trigger-01",
+      "type": "should_trigger",
+      "prompt": "他卖了五张卡给上家，后来又按上家指令去银行柜台取了两次现，每次给五百块，定帮信还是掩隐还是诈骗共犯？",
+      "expected_behavior": "激活本 skill，走三要素（支配性/意思联络/对象特定性）+五查（明知内容/地位/方式/内容/获利形式）：线下取现+按次收费→倾向掩隐，若与上家稳定配合则从一重定诈骗共犯。",
+      "notes": "三罪界分是本 skill 核心"
+    },
+    {
+      "id": "should-trigger-02",
+      "type": "should_trigger",
+      "prompt": "他说把卡给朋友是为办贷款刷流水，这个辩解怎么审查？",
+      "expected_behavior": "激活本 skill，适用辩解合理性反证：核查办贷现实需求、实际申办行为、异常表现（跨地域流动、销毁通讯记录）、合理费用支出等综合判断明知。",
+      "notes": "明知反证审查是特色规则"
+    },
+    {
+      "id": "should-trigger-03",
+      "type": "should_trigger",
+      "prompt": "卡里流水一百多万，但查实是诈骗资金的只有两千八，够不够罪？",
+      "expected_behavior": "激活本 skill，适用入罪标准：流入资金需至少3000元经查证系涉诈资金，2800元不足→不满足帮信入罪的涉诈资金要件；防止仅凭流水入罪。",
+      "notes": "涉诈资金查证规则"
+    },
+    {
+      "id": "should-not-trigger-01",
+      "type": "should_not_trigger",
+      "prompt": "诈骗集团的首要分子按全部诈骗数额定罪吗？",
+      "expected_behavior": "不应激活本 skill，应激活 telecom-fraud-review（集团成员罪责范围）。",
+      "notes": "跨 skill 混淆诱饵：同书兄弟 skill"
+    },
+    {
+      "id": "should-not-trigger-02",
+      "type": "should_not_trigger",
+      "prompt": "帮人代购毒品时顺路捎带赚个跑腿费，算贩卖毒品吗？",
+      "expected_behavior": "不应激活本 skill，应激活 drug-crime-review（代购三型定性）。",
+      "notes": "方法同源但罪种不同的诱饵"
+    },
+    {
+      "id": "edge-01",
+      "type": "edge_case",
+      "prompt": "卡农把卡交出去后，被上家带着去银行刷了一次脸转了一笔钱，之后再没参与，怎么定？",
+      "expected_behavior": "激活本 skill：按刷脸区分注册验证/转账验证+主客观情节——偶发刷脸转账、明知资金性质证据不足的考虑定帮信罪；频繁存转、解封账户、按比例抽成的才倾向掩隐罪。",
+      "notes": "边界：刷脸转账的分级评价"
+    }
+  ],
+  "minimum_pass_rate": 0.8,
+  "notes": "should-not-trigger-01（telecom-fraud-review）、should-not-trigger-02（drug-crime-review）为兄弟 skill 诱饵。"
+}

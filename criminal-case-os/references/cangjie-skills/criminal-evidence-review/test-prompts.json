@@ -1,0 +1,52 @@
+{
+  "skill": "criminal-evidence-review",
+  "version": "0.1.0",
+  "source_book": "刑事审判实务（下册） — 最高人民法院组织编写",
+  "darwin_compatible": true,
+  "test_cases": [
+    {
+      "id": "should-trigger-01",
+      "type": "should_trigger",
+      "prompt": "故意杀人案里有两份精神鉴定，一份说无刑事责任能力、一份说限制责任能力，采信哪一份？",
+      "expected_behavior": "激活本 skill，按鉴定意见'四查'逐份实质审查资质、程序、方法、检材，说明'鉴定只有科学性没有权威性'、不以机构级别定优劣，必要时重新鉴定或经出庭质证比较。",
+      "notes": "鉴定意见审查是该 skill 的核心模块"
+    },
+    {
+      "id": "should-trigger-02",
+      "type": "should_trigger",
+      "prompt": "公诉机关只提交了微信聊天记录的截图和一份情况说明，没有提取笔录，这份证据能用吗？",
+      "expected_behavior": "激活本 skill，按电子数据'真实性五查+完整性六法+合法性五查'审查：无提取笔录、原始介质、校验值→过程不可重现，截图不能替代规范提取，原则上不采信（除非可补正）。",
+      "notes": "电子数据审查是高频场景"
+    },
+    {
+      "id": "should-trigger-03",
+      "type": "should_trigger",
+      "prompt": "勘验笔录上勘查人员和见证人都没签名，这份笔录还能作为定案根据吗？",
+      "expected_behavior": "激活本 skill，走'瑕疵 vs 非法'分流：无签名属可补正瑕疵，能补正或合理解释的可采用，不能的排除。",
+      "notes": "补正与排除的分界是该 skill 的三层闸门"
+    },
+    {
+      "id": "should-not-trigger-01",
+      "type": "should_not_trigger",
+      "prompt": "被告人说他被刑讯逼供了，这份讯问笔录要排除，程序上怎么处理？",
+      "expected_behavior": "不应激活本 skill，应激活 illegal-evidence-exclusion（排非程序问题，不是证据真实性/证明力审查）。",
+      "notes": "跨 skill 混淆诱饵：同书兄弟 skill"
+    },
+    {
+      "id": "should-not-trigger-02",
+      "type": "should_not_trigger",
+      "prompt": "关键证人拒不出庭，法院可以强制他到庭吗？",
+      "expected_behavior": "不应激活本 skill，应激活 courtroom-substantiation（证人出庭保障机制）。",
+      "notes": "程序组织类诱饵"
+    },
+    {
+      "id": "edge-01",
+      "type": "edge_case",
+      "prompt": "侦查机关出具了一份加盖公章的情况说明，证明提取过程合法，但没有侦查人员签名，怎么认定？",
+      "expected_behavior": "可激活本 skill（书面材料的形式要件与证明力审查），也可衔接 illegal-evidence-exclusion（若该说明用于证明取证合法性则其证明价值受限）；合理判断是先作形式审查并指出情况说明不能替代原始取证笔录。",
+      "notes": "边界：形式瑕疵审查与排非调查交叉"
+    }
+  ],
+  "minimum_pass_rate": 0.8,
+  "notes": "至少 3 条 should_trigger + 2 条 should_not_trigger + 1 条 edge_case。should_not_trigger 必须全部通过（诱饵容错为 0），其中 should-not-trigger-01 为同书兄弟 skill 场景。"
+}

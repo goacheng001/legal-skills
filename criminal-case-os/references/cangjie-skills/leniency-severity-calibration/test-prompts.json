@@ -1,0 +1,52 @@
+{
+  "skill": "leniency-severity-calibration",
+  "version": "0.1.0",
+  "source_book": "《刑事审判实务（上册）》 最高人民法院组织编写",
+  "darwin_compatible": true,
+  "test_cases": [
+    {
+      "id": "should_trigger-01",
+      "type": "should_trigger",
+      "prompt": "被告人既有自首又有累犯，量刑建议只体现了从重，怎么平衡",
+      "expected_behavior": "应激活：逆向情节总体评价，禁止折抵",
+      "notes": ""
+    },
+    {
+      "id": "should_trigger-02",
+      "type": "should_trigger",
+      "prompt": "因为家庭矛盾激化把亲属打重伤，有从宽空间吗",
+      "expected_behavior": "应激活：民间矛盾四要素+13项考量",
+      "notes": ""
+    },
+    {
+      "id": "should_trigger-03",
+      "type": "should_trigger",
+      "prompt": "被告人赔偿了80万，家属出了谅解书，能从轻多少",
+      "expected_behavior": "应激活：赔偿+悔罪+谅解三分量，防花钱买刑",
+      "notes": ""
+    },
+    {
+      "id": "should_not_trigger-01",
+      "type": "should_not_trigger",
+      "prompt": "共同犯罪里主犯从犯怎么区分",
+      "expected_behavior": "应触发 joint-crime-culpability",
+      "notes": "诱饵: 同书兄弟skill场景"
+    },
+    {
+      "id": "should_not_trigger-02",
+      "type": "should_not_trigger",
+      "prompt": "自首情节认定需要什么条件",
+      "expected_behavior": "应触发 surrender-merit-verification（情节成立与否）",
+      "notes": "诱饵: 同书兄弟skill场景"
+    },
+    {
+      "id": "edge_case-01",
+      "type": "edge_case",
+      "prompt": "双方都动手的斗殴案，被告人事后赔偿很积极",
+      "expected_behavior": "边界：先过互殴/防卫定性（self-defense），再进从宽评价",
+      "notes": ""
+    }
+  ],
+  "minimum_pass_rate": 0.8,
+  "notes": "至少3条should_trigger+2条should_not_trigger+1条edge_case。全部should_not_trigger必须通过（诱饵容错为0），其中至少1条是同书兄弟skill场景（跨skill混淆测试）。"
+}

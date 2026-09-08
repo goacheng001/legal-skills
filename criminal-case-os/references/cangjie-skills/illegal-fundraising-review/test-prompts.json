@@ -1,0 +1,52 @@
+{
+  "skill": "illegal-fundraising-review",
+  "version": "0.1.0",
+  "source_book": "《刑事审判实务（上册）》 最高人民法院组织编写",
+  "darwin_compatible": true,
+  "test_cases": [
+    {
+      "id": "should_trigger-01",
+      "type": "should_trigger",
+      "prompt": "这家理财公司只向熟人拉投资，构成非吸吗",
+      "expected_behavior": "应激活：四要件之公开性/社会性检验",
+      "notes": ""
+    },
+    {
+      "id": "should_trigger-02",
+      "type": "should_trigger",
+      "prompt": "老板把钱都投到明显亏本的项目里了，算集资诈骗还是非吸",
+      "expected_behavior": "应激活：肆意处分与目的推定",
+      "notes": ""
+    },
+    {
+      "id": "should_trigger-03",
+      "type": "should_trigger",
+      "prompt": "业务员拿佣金提成，退赔要赔全部损失吗",
+      "expected_behavior": "应激活：退赔分层规则",
+      "notes": ""
+    },
+    {
+      "id": "should_not_trigger-01",
+      "type": "should_not_trigger",
+      "prompt": "合同诈骗和集资诈骗的区别",
+      "expected_behavior": "罪名比较咨询→部分关联但应转 fraud-intent-review 的刑民框架或直接答；判为不激活",
+      "notes": "跨skill诱饵：合同相对方型诈骗"
+    },
+    {
+      "id": "should_not_trigger-02",
+      "type": "should_not_trigger",
+      "prompt": "投资人没报案会影响追诉吗",
+      "expected_behavior": "程序问题，不激活",
+      "notes": "诱饵: 同书兄弟skill场景"
+    },
+    {
+      "id": "edge_case-01",
+      "type": "edge_case",
+      "prompt": "返利是拉新当天就给的",
+      "expected_behavior": "边界：即时返利仍属利诱性，激活",
+      "notes": ""
+    }
+  ],
+  "minimum_pass_rate": 0.8,
+  "notes": "至少3条should_trigger+2条should_not_trigger+1条edge_case。全部should_not_trigger必须通过（诱饵容错为0），其中至少1条是同书兄弟skill场景（跨skill混淆测试）。"
+}

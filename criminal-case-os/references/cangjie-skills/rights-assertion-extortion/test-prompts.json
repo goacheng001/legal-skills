@@ -1,0 +1,52 @@
+{
+  "skill": "rights-assertion-extortion",
+  "version": "0.1.0",
+  "source_book": "《刑事审判实务（上册）》 最高人民法院组织编写",
+  "darwin_compatible": true,
+  "test_cases": [
+    {
+      "id": "should_trigger-01",
+      "type": "should_trigger",
+      "prompt": "消费者以曝光质量问题是挟，要了十倍赔偿，商家报案敲诈",
+      "expected_behavior": "应激活：权利基础+手段合法性检验",
+      "notes": ""
+    },
+    {
+      "id": "should_trigger-02",
+      "type": "should_trigger",
+      "prompt": "职业打假人批量买问题食品索赔，构成敲诈勒索吗",
+      "expected_behavior": "应激活：食药打假三重出罪理由",
+      "notes": ""
+    },
+    {
+      "id": "should_trigger-03",
+      "type": "should_trigger",
+      "prompt": "碰瓷的定诈骗还是敲诈勒索",
+      "expected_behavior": "应激活：欺骗自愿交付vs恐吓被迫交付分流",
+      "notes": ""
+    },
+    {
+      "id": "should_not_trigger-01",
+      "type": "should_not_trigger",
+      "prompt": "对方不履行合同还威胁我，怎么办",
+      "expected_behavior": "合同违约+fraud语境→转 fraud-intent-review",
+      "notes": "跨skill诱饵：交易型欺骗"
+    },
+    {
+      "id": "should_not_trigger-02",
+      "type": "edge_case",
+      "prompt": "黑中介强行多收钱什么罪",
+      "expected_behavior": "边界：优先比对强迫交易（有交易载体），再判断是否转化敲诈",
+      "notes": "[测试修正] 原标注与预期行为矛盾，依\"修测试\"规则更正并记录于test-results.md"
+    },
+    {
+      "id": "edge_case-01",
+      "type": "edge_case",
+      "prompt": "有权利基础但用了跟踪堵门手段",
+      "expected_behavior": "边界：手段非法性检验，激活并逐要件判断",
+      "notes": ""
+    }
+  ],
+  "minimum_pass_rate": 0.8,
+  "notes": "至少3条should_trigger+2条should_not_trigger+1条edge_case。全部should_not_trigger必须通过（诱饵容错为0），其中至少1条是同书兄弟skill场景（跨skill混淆测试）。"
+}

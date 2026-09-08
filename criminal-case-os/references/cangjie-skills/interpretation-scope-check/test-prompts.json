@@ -1,0 +1,52 @@
+{
+  "skill": "interpretation-scope-check",
+  "version": "0.1.0",
+  "source_book": "《刑事审判实务（上册）》 最高人民法院组织编写",
+  "darwin_compatible": true,
+  "test_cases": [
+    {
+      "id": "should_trigger-01",
+      "type": "should_trigger",
+      "prompt": "最高检指控他构成非法经营罪，依据就是刑法225条的'其他严重扰乱市场秩序'，我们觉得这个解释太宽了",
+      "expected_behavior": "应激活本skill：走文义射程检验+与前三项行为的三性相当性比对",
+      "notes": ""
+    },
+    {
+      "id": "should_trigger-02",
+      "type": "should_trigger",
+      "prompt": "把'出售'解释成包含'出借'，算不算类推解释，会不会违反罪刑法定",
+      "expected_behavior": "应激活：射程检验并给出扩张/类推结论",
+      "notes": ""
+    },
+    {
+      "id": "should_trigger-03",
+      "type": "should_trigger",
+      "prompt": "这个罪名最后有个兜底条款，适用时要注意什么",
+      "expected_behavior": "应激活：同类解释三步比对",
+      "notes": ""
+    },
+    {
+      "id": "should_not_trigger-01",
+      "type": "should_not_trigger",
+      "prompt": "帮我查一下非法经营罪的立案标准数额是多少",
+      "expected_behavior": "纯规范查询，不应激活本skill（应答查询而非检验解释合法性）",
+      "notes": "诱饵: 同书兄弟skill场景"
+    },
+    {
+      "id": "should_not_trigger-02",
+      "type": "should_not_trigger",
+      "prompt": "公司只违反了部委规章，会不会构成犯罪",
+      "expected_behavior": "应触发 regulatory-crime-review（前置法资格问题），而非解释界限",
+      "notes": "诱饵: 同书兄弟skill场景"
+    },
+    {
+      "id": "edge_case-01",
+      "type": "edge_case",
+      "prompt": "对'凶器'扩大到包括装了盐酸的瓶子，辩护人说不算凶器",
+      "expected_behavior": "边界：射程内的扩张解释检验，应激活但结论方向是允许扩张",
+      "notes": ""
+    }
+  ],
+  "minimum_pass_rate": 0.8,
+  "notes": "至少3条should_trigger+2条should_not_trigger+1条edge_case。全部should_not_trigger必须通过（诱饵容错为0），其中至少1条是同书兄弟skill场景（跨skill混淆测试）。"
+}

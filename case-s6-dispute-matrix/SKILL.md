@@ -17,6 +17,10 @@ description: "九步法S6-争点矩阵。对比原告与被告主张，形成事
 
 ---
 
+## 领域知识卡片（条件触发，2026-09-08 融合挂接）
+
+本步骤案由命中 `../case-os/references/domain-map.json` "案由映射"时，按"加载点.S6"加载对应领域卡片（每点≤3张；读卡片 SKILL.md 的 I 段骨架与 E 段步骤，作为本步骤审查框架补充）。卡片是**解释性知识**：与现行法、claim-basis-table 冲突时后者优先。命中时在输出 JSON 附加 `domain_card_hit: true` 与 `domain_insights` 数组（card_slug＋要点＋应用位置）；map 或卡片缺失/不可解析 → 静默继续并记 `domain_card_hit: false`；案由未命中不重复记种子（由 S2 统一登记）。禁止把卡片要点直接写成法院认定结论或争点定论（卡片只供争点预判参考，认定须经双方对撞与律师必审）。
+
 ## 执行流程
 
 ### 第一步：读取双方文件
@@ -52,7 +56,7 @@ description: "九步法S6-争点矩阵。对比原告与被告主张，形成事
 
 ### 第五步：生成 S6 文件
 
-输出采用合法 JSON frontmatter + Markdown 正文：
+输出采用合法 JSON frontmatter + Markdown 正文（命中领域卡片时 frontmatter 附加 `domain_card_hit`/`domain_insights`，定义见"领域知识卡片"段）：
 
 ```markdown
 ---
