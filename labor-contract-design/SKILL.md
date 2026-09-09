@@ -13,8 +13,9 @@ description: "劳动法OS-顾问轨。劳动合同设计/审查——13条款域
 
 **独立触发保障**(被直接调用时):
 1. 加载 `labor-os/references/redlines-labor.md`;
-2. 加载"知识引用"节必读主题库;
-3. 顾问轨无立场锁定,直接进入本职流程。
+2. 加载 `labor-os/references/ldzy-entity-routing.md`;
+3. 加载"知识引用"节必读主题库;
+4. 顾问轨无立场锁定;条款涉及书面合同/期限/二倍工资风险时挂 `ldzy-written-contract-double-wage`,工时加班条款挂 `ldzy-overtime-compliance`。
 
 **必须确认**:是(出件前一次)。
 

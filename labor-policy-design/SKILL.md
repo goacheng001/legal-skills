@@ -13,8 +13,9 @@ description: "劳动法OS-顾问轨。规章制度(考勤/休假/奖惩/纪律)�
 
 **独立触发保障**(被直接调用时):
 1. 加载 `labor-os/references/redlines-labor.md`;
-2. 加载"知识引用"节必读主题库;
-3. 顾问轨无立场锁定,直接进入本职流程。
+2. 加载 `labor-os/references/ldzy-entity-routing.md`;
+3. 加载"知识引用"节必读主题库;
+4. 顾问轨无立场锁定;**强制**对照 `ldzy-work-rules-discipline`(民主程序×合法内容×公示、禁止罚款、关联公司制度不得直接套用)。
 
 **必须确认**:是(出件前一次)。
 

@@ -17,9 +17,11 @@ description: "劳动法OS-争议轨第三步。仲裁裁决后的裁审衔接—
 
 **独立触发保障**(被直接调用时):
 1. 加载 `labor-os/references/redlines-labor.md`;
-2. 尝试读取 `案件目录/_archive/labor-os-state.json`,若存在 → 继承 track/stance 不再问;
-3. 若不存在 → **必须先询问一次立场**;
-4. 加载"知识引用"节必读主题库。
+2. 加载 `labor-os/references/ldzy-entity-routing.md`;
+3. 尝试读取 `案件目录/_archive/labor-os-state.json`,若存在 → 继承 track/stance 不再问;
+4. 若不存在 → **必须先询问一次立场**;
+5. 加载"知识引用"节必读主题库;
+6. 准备调用 `ldzy-arbitration-litigation-bridge`（终局/窗口/新增请求/举证）。
 
 **必须确认**:是(任何文书在用户确认前不出)。
 
@@ -41,12 +43,17 @@ description: "劳动法OS-争议轨第三步。仲裁裁决后的裁审衔接—
 
 **写入**:`labor-os-state.json.arbitration.final_award`。
 
-### 步骤2 计算换轨窗口【完成判据:两个 deadline 写入】
+### 步骤2 计算换轨窗口【完成判据:两个 deadline 写入+ldzy 衔接检查】
 
 - **非终局**:**送达后15日**起诉 → 写入 deadlines[] (type=起诉窗口);
 - **终局+劳动者**:**送达后15日**起诉 → 写入 deadlines[];
 - **终局+用人单位**:**送达后30日**撤裁 → 写入 deadlines[];
 - **首屏倒计时**:剩余天数。
+
+**强制**:对照 `ldzy-arbitration-litigation-bridge` —
+1. 一裁终局类型是否识别正确;
+2. 起诉状若**新增**仲裁未裁请求,是否需补裁/拆分;
+3. 举证/自认/高度盖然提示是否写入换轨备忘录。
 
 **逾期 = 裁决生效**(失权警告)。
 

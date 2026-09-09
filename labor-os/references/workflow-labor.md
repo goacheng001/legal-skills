@@ -61,8 +61,8 @@
                           ▼
 ┌──────────────────────────────────────────────────────────┐
 │  L1: labor-intake(独立触发保障先行)                       │
-│     - 三选一立场                                            │
-│     - 时效红线首屏预警                                       │
+│     - 三选一立场 + 时效红线首屏预警                          │
+│     - 强制 ldzy-labor-relation-id（四规则）                 │
 │     - 写 labor-os-state.json                               │
 └──────────┬───────────────────────────────────────────────┘
            ▼
@@ -142,6 +142,48 @@
 
 ---
 
+## 四-b、实体 skill 层（ldzy · 2026-09 挂接）
+
+> 完整路由表: `ldzy-entity-routing.md`（强制引用）。此处只给全景。
+
+```
+labor-os / 子 skill（流程）
+        │  按争点点名
+        ▼
+┌──────────────────────────────────────────┐
+│  ldzy-* 实体裁判技能（E 步骤可核验）        │
+│  P0: relation-id / dismissal / severance │
+│      / overtime                          │
+│  P1: incomplete / work-rules / transfer  │
+│      / double-wage / acceptance / bridge │
+│  P2: injury / special-forms              │
+└──────────────────────────────────────────┘
+```
+
+**阶段强制挂钩（摘要）**:
+
+| 阶段 | 至少调用 |
+|------|----------|
+| L1 intake | `ldzy-labor-relation-id`（取代「仅三要素口号」）; 请求过滤可用 `ldzy-case-acceptance-filter`; 特殊主体 → `ldzy-special-forms-subjects` |
+| L2 arbitration | 按请求项路由 dismissal / severance / overtime / written-contract 等; 文书旁注 slug |
+| L3 bridge | `ldzy-arbitration-litigation-bridge` |
+| L4 execution | 金额复核可调 `ldzy-severance-calc` |
+| 顾问 contract | written-contract + overtime（条款相关时） |
+| 顾问 policy | **强制** `ldzy-work-rules-discipline` |
+| 顾问 exit | dismissal + severance (+ transfer 若走不胜任调岗) |
+| 顾问 audit | 分模块挂 overtime / work-rules / written-contract / dismissal+severance |
+
+**安装冒烟**（ldzy 软链）:
+
+```bash
+for s in ldzy-labor-relation-id ldzy-dismissal-review ldzy-severance-calc ldzy-overtime-compliance; do
+  test -f ~/.claude/skills/$s/SKILL.md && echo OK $s || echo FAIL $s
+done
+test -s ~/.claude/skills/labor-os/references/ldzy-entity-routing.md && echo OK routing
+```
+
+---
+
 ## 五、与 case-os 的边界
 
 | 能力 | 归属 |
@@ -169,6 +211,11 @@ for s in labor-os labor-intake labor-arbitration labor-bridge labor-execution \
          labor-contract-design labor-policy-design labor-exit-plan labor-audit; do
   ls -ld "$SKILL_ROOT/../$s" >/dev/null || echo "FAIL: $s 缺失"
 done
+	# 1b. ldzy 实体 skill（至少 P0）
+	for s in ldzy-labor-relation-id ldzy-dismissal-review ldzy-severance-calc ldzy-overtime-compliance; do
+	  test -f "$SKILL_ROOT/../$s/SKILL.md" || echo "FAIL: $s 缺失"
+	done
+	test -s "$SKILL_ROOT/references/ldzy-entity-routing.md" || echo "FAIL: ldzy-entity-routing.md"
 
 # 2. 知识库挂载(期望13库)
 [ "$(ls "$SKILL_ROOT/references/knowledge/" | wc -l | tr -d ' ')" = "13" ] \

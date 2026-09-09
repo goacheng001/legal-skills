@@ -13,8 +13,9 @@ description: "劳动法OS-顾问轨。员工离职优化方案——画像收集
 
 **独立触发保障**(被直接调用时):
 1. 加载 `labor-os/references/redlines-labor.md`;
-2. 加载"知识引用"节必读主题库;
-3. 顾问轨无立场锁定,直接进入本职流程。
+2. 加载 `labor-os/references/ldzy-entity-routing.md`;
+3. 加载"知识引用"节必读主题库;
+4. 顾问轨无立场锁定;路径合法性挂 `ldzy-dismissal-review`,成本挂 `ldzy-severance-calc`,不胜任调岗路径挂 `ldzy-job-transfer-dual-gate`,违纪路径挂 `ldzy-work-rules-discipline`。
 
 **必须确认**:是(出件前一次)。
 

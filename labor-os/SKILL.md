@@ -8,11 +8,11 @@ description: "劳动法OS 总控。菜单式路由与断点恢复,识别轨道(�
 ## 工作定位
 
 **职责**:**统一入口与调度器**——三件事:
-1. 加载红线与知识库索引(运行 `references/redlines-labor.md` + `references/workflow-labor.md` 链接);
+1. 加载红线、工作流与实体路由( `references/redlines-labor.md` + `workflow-labor.md` + `ldzy-entity-routing.md` );
 2. 识别轨道(顾问 / 争议)与立场(争议轨三选一);
 3. 断点恢复与调度。
 
-**自身不执行业务**——所有实质工作派给 8 个子 skill。
+**自身不执行业务**——流程派给 8 个子 skill；**实体裁判尺度**派给 `ldzy-*`（见 `references/ldzy-entity-routing.md`），总控与子 skill 只负责**按争点点名调度**，不替代 ldzy 的 E 步骤。
 
 ---
 
@@ -114,10 +114,12 @@ description: "劳动法OS 总控。菜单式路由与断点恢复,识别轨道(�
 ## 独立触发保障
 
 子skill 偶尔会**被直接调用**(绕过本总控),此时必须**强制**先做:
-1. 加载 `references/redlines-labor.md`;
-2. 加载相关主题库索引;
-3. 若为争议轨 — 尝试读 `labor-os-state.json`,继承 track/stance(缺失则 🔴 **问一次并写回**,禁止代用户假定立场);
-4. 然后再进入本职流程。
+1. 加载 `labor-os/references/redlines-labor.md`;
+2. 加载 `labor-os/references/ldzy-entity-routing.md`（实体 skill 路由表）;
+3. 加载相关主题库索引;
+4. 若为争议轨 — 尝试读 `labor-os-state.json`,继承 track/stance(缺失则 🔴 **问一次并写回**,禁止代用户假定立场);
+5. 按路由表点名所需 `ldzy-*`（缺失则警告并降级 knowledge）;
+6. 然后再进入本职流程。
 
 (已在每个子 skill 的 SKILL.md "工作定位"段以"独立触发保障"标题落地)
 
@@ -129,6 +131,7 @@ description: "劳动法OS 总控。菜单式路由与断点恢复,识别轨道(�
 |------|------|
 | `redlines-labor.md` | 继承 case-os 红线 + 劳动新增红线(全文,各子skill引用) |
 | `workflow-labor.md` | 双轨全景图 + 子 skill 一页纸 I/O |
+| `ldzy-entity-routing.md` | 《劳动争议二十讲》蒸馏实体 skill 争点路由与阶段强制挂钩 |
 | `knowledge/` | 13 个主题库(原10个;2026-09-03 依据《人民法院办理劳动争议案件实用手册》《劳动与社会保障法规汇编》蒸馏扩容,新增:社保工伤规则表 / 劳动报酬与补偿争议规则 / 劳动社保法规索引) |
 
 ---
@@ -159,9 +162,10 @@ description: "劳动法OS 总控。菜单式路由与断点恢复,识别轨道(�
 
 ## 知识引用
 
-总控**自身不消费**知识库,只**调度**消费它的子 skill。
+总控**自身不消费**知识库,只**调度**消费它的子 skill 与 `ldzy-*`。
 但菜单中**提示用户**:
-- 争议轨:全程已固化到 `labor-arbitration` / `labor-bridge` / `labor-execution`;
-- 顾问轨:已固化到 `labor-contract-design` / `labor-policy-design` / `labor-exit-plan` / `labor-audit`。
+- 争议轨流程: `labor-arbitration` / `labor-bridge` / `labor-execution`;
+- 顾问轨流程: `labor-contract-design` / `labor-policy-design` / `labor-exit-plan` / `labor-audit`;
+- 实体尺度: 按争点调度 `ldzy-*`（路由表 `ldzy-entity-routing.md`；源书《劳动争议二十讲》）。
 
 各子 skill 的"知识引用"段已列出所需主题库,不再在本文件内复制。

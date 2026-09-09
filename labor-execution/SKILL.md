@@ -17,9 +17,11 @@ description: "劳动法OS-争议轨第四步。生效法律文书的执行——
 
 **独立触发保障**(被直接调用时):
 1. 加载 `labor-os/references/redlines-labor.md`;
-2. 尝试读取 `案件目录/_archive/labor-os-state.json`,若存在 → 继承 track/stance 不再问;
-3. 若不存在 → **必须先询问一次立场**;
-4. 加载"知识引用"节必读主题库。
+2. 加载 `labor-os/references/ldzy-entity-routing.md`;
+3. 尝试读取 `案件目录/_archive/labor-os-state.json`,若存在 → 继承 track/stance 不再问;
+4. 若不存在 → **必须先询问一次立场**;
+5. 加载"知识引用"节必读主题库;
+6. 执行标的含补偿/赔偿金时,可用 `ldzy-severance-calc` **仅复核**与主文一致性(不重开实体辩论)。
 
 **必须确认**:是(执行申请书与失信申请需用户书面确认后出)。
 

@@ -16,9 +16,11 @@ description: "劳动法OS-争议轨第二步。劳动争议仲裁程序——申
 
 **独立触发保障**(被直接调用时):
 1. 加载 `labor-os/references/redlines-labor.md`;
-2. 尝试读取 `案件目录/_archive/labor-os-state.json`,若存在 → 继承 track/stance 不再问;
-3. 若不存在 → **必须先询问一次立场**;
-4. 加载"知识引用"节必读主题库。
+2. 加载 `labor-os/references/ldzy-entity-routing.md`;
+3. 尝试读取 `案件目录/_archive/labor-os-state.json`,若存在 → 继承 track/stance 不再问;
+4. 若不存在 → **必须先询问一次立场**;
+5. 加载"知识引用"节必读主题库;
+6. 按 S1 请求项准备点名 `ldzy-dismissal-review` / `ldzy-severance-calc` / `ldzy-overtime-compliance` / `ldzy-written-contract-double-wage` 等。
 
 **必须确认**:是(称谓用申请人/被申请人;申请书/答辩书需"可以出了"才出终稿)。
 
@@ -40,18 +42,26 @@ description: "劳动法OS-争议轨第二步。劳动争议仲裁程序——申
 
 **缺一侧/缺步骤**:不直接报错,而是暂停并在 PROGRESS.md + labor-os-state.json 标记,询问用户:① 先驱动 case-os 把缺的补齐;② 或降级模式继续。
 
-### 步骤2 生成仲裁申请书 或 答辩书【完成判据:称谓正确+逐项请求金额计算式】
+### 步骤2 生成仲裁申请书 或 答辩书【完成判据:称谓正确+逐项请求金额计算式+ldzy slug】
 
 **称谓铁律**(红线):
 - **仲裁阶段全文**:"申请人" / "被申请人";
 - **诉讼阶段**(L3之后):"原告" / "被告";
 - 案件目录沿用 case-os"原告九步法/被告九步法"命名,**申请人≈原告位**。
 
-**申请人侧(claimant)**:产出《劳动仲裁申请书》,逐项请求含**金额计算式**(如"经济补偿金 = 月工资 × N"),引用九步法 S1 主张项。
+**实体挂钩(强制按请求项)**:查 `ldzy-entity-routing.md` —
+- 解除/终止合法性 → 先跑 `ldzy-dismissal-review` E 步骤,再写请求/抗辩;
+- N / 2N / 补偿 → **`ldzy-severance-calc`** 给出可复核算式(基数、年限、分段);
+- 加班费 → **`ldzy-overtime-compliance`**;
+- 二倍工资/无固定期限 → **`ldzy-written-contract-double-wage`**;
+- 规章违纪 → 组合 `ldzy-work-rules-discipline`;
+- 调岗争议 → `ldzy-job-transfer-dual-gate`。
 
-**被申请人侧(respondent)**:产出《仲裁答辩书》,针对申请人请求**逐项抗辩**:事实抗辩 → 法律抗辩 → 证据抗辩 → 数额抗辩。
+**申请人侧(claimant)**:产出《劳动仲裁申请书》,逐项请求含**金额计算式**,引用九步法 S1;每项旁注 `ldzy:` slug。
 
-**输出**:`intermediate/劳动覆盖层/L2-仲裁程序/申请书_或_答辩书.md`(JSON frontmatter)。
+**被申请人侧(respondent)**:产出《仲裁答辩书》,逐项抗辩;同样旁注所用 ldzy。
+
+**输出**:`intermediate/劳动覆盖层/L2-仲裁程序/申请书_或_答辩书.md`(JSON frontmatter 含 `ldzy_invoked: []`)。
 
 ### 步骤3 证据目录【完成判据:表格+编码+证明目的客观陈述】
 

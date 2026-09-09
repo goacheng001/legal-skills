@@ -13,8 +13,9 @@ description: "劳动法OS-顾问轨编排器。用工体检——六模块扫描
 
 **独立触发保障**(被直接调用时):
 1. 加载 `labor-os/references/redlines-labor.md`;
-2. 加载"知识引用"节全部必读主题库;
-3. 顾问轨无立场锁定,直接进入本职流程。
+2. 加载 `labor-os/references/ldzy-entity-routing.md`;
+3. 加载"知识引用"节全部必读主题库;
+4. 顾问轨无立场锁定;六模块扫描时:合同→`ldzy-written-contract-double-wage`;制度→`ldzy-work-rules-discipline`;工时→`ldzy-overtime-compliance`;离职档案→`ldzy-dismissal-review`+`ldzy-severance-calc`。
 
 **必须确认**:是(出体检报告前一次)。
 
